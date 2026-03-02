@@ -14,7 +14,39 @@ const VOCABULARY = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    initNavigation();
+    // --- Hamburger Menu Toggle ---
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+    }
+
+    // --- Section Navigation ---
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.activity-section');
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            navBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Show target section
+            const target = btn.dataset.target;
+            sections.forEach(s => s.classList.remove('active'));
+            const targetSection = document.getElementById(target);
+            if (targetSection) targetSection.classList.add('active');
+
+            // Close hamburger menu on mobile after selection
+            if (navLinks) navLinks.classList.remove('open');
+            if (hamburgerBtn) hamburgerBtn.classList.remove('open');
+        });
+    });
+
     initDragAndDrop();
     initFillBlanks();
     initCrossword();

@@ -19,13 +19,20 @@
     </header>
 
     <nav class="app-nav">
-        <button class="nav-btn active" data-target="ai-lab">AI Lab</button>
-        <button class="nav-btn" data-target="drag-drop">Matching</button>
-        <button class="nav-btn" data-target="fill-blanks">Sentences</button>
-        <button class="nav-btn" data-target="crossword">Crossword</button>
-        <button class="nav-btn" data-target="hangman">Hangman</button>
-        <button class="nav-btn" data-target="word-scramble">Scramble</button>
-        <button class="nav-btn" data-target="speed-typing">Speed Typing</button>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+            <button class="nav-btn active" data-target="ai-lab">AI Lab</button>
+            <button class="nav-btn" data-target="drag-drop">Matching</button>
+            <button class="nav-btn" data-target="fill-blanks">Sentences</button>
+            <button class="nav-btn" data-target="crossword">Crossword</button>
+            <button class="nav-btn" data-target="hangman">Hangman</button>
+            <button class="nav-btn" data-target="word-scramble">Scramble</button>
+            <button class="nav-btn" data-target="speed-typing">Speed Typing</button>
+        </div>
     </nav>
     <main class="app-content">
         <!-- AI Lab (Default) -->
