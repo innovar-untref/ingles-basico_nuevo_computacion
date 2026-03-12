@@ -48,12 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     initDragAndDrop();
-    initFillBlanks();
+    // initFillBlanks(); <- Removed as requested
     initCrossword();
     initAILab();
     initHangman();
     initScramble();
     initTyping();
+
+    // --- Result Modal Control ---
+    const resultModal = document.getElementById('result-modal');
+    const closeResultX = document.getElementById('close-result');
+    const closeResultBtn = document.getElementById('close-result-btn');
+
+    if (resultModal && closeResultX && closeResultBtn) {
+        [closeResultX, closeResultBtn].forEach(el => {
+            el.onclick = () => resultModal.classList.add('hidden');
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target === resultModal) resultModal.classList.add('hidden');
+        });
+    }
 });
 
 // 5. AI Lab Logic (Grid of Cards)
@@ -64,6 +78,8 @@ function initAILab() {
     const content = document.getElementById('prompt-content');
     const closeBtn = document.getElementById('close-modal');
     const copyBtn = document.getElementById('copy-prompt');
+
+    if (!grid || !modal || !modalTitle || !content || !closeBtn || !copyBtn) return;
 
     grid.innerHTML = '';
 
@@ -90,38 +106,87 @@ MÉTODO ROCKET para el término: "${item.word.toUpperCase()}"
 R - ROL: Eres Docente de Inglés de Innovar UNTREF, experto en Inglés Técnico para Ingeniería.
 O - OBJETIVO: Que el estudiante domine "${item.word.toUpperCase()}" en un contexto de Ingeniería Informática.
 C - RECURSOS INSTITUCIONALES (Vínculos Directos):
-    - Sitios: British Council (https://learnenglish.britishcouncil.org), BBC Learning English (https://www.bbc.co.uk/learningenglish), Cambridge English (https://www.cambridgeenglish.org/learning-english/), Oxford Resources (https://elt.oup.com/learning_resources).
-    - Videos: BBC Learning (@bbclearningenglish), Cambridge TV (@cambridgeenglishtv), British Council (@BritishCouncilLE).
+    - Innovar UNTREF: https://www.innovaruntref.com.ar
 K - KEY DETAILS (Detalles clave):
     1. Definición técnica precisa de "${item.word.toUpperCase()}" (EN/ES).
     2. 3 casos de uso reales en desarrollo/infraestructura.
     3. Analiza la pronunciación de "${item.word.toUpperCase()}" en YouGlish: ${youglishSearch}
-    4. Actividades lúdicas recomendadas con vínculos directos:
-       - British Council Wordshake: https://learnenglish.britishcouncil.org/general-english/games/wordshake
-       - British Council Sushi Spell: https://learnenglish.britishcouncil.org/general-english/games/sushi-spell
-       - BBC Gameshow (Gramática): https://www.bbc.co.uk/learningenglish/english/features/gameshow
-       - Cambridge English (Practicar): https://www.cambridgeenglish.org/learning-english/games-for-learners/
+    4. Actividades lúdicas recomendadas con vínculos directos.
 E - EXPECTATIVA: Respuesta pedagógica, estructurada y profesional.
 T - TONO: Académico y facilitador.
 
-Instrucción final: Saluda como 'Docente de Inglés de Innovar UNTREF', presenta el contenido ROCKET y propón un 'INTERACTIVE CHALLENGE' técnico sobre "${item.word.toUpperCase()}", esperando mi respuesta antes de continuar.`;
+Instrucción final: Saluda como 'Docente de Inglés de Innovar UNTREF', presenta el contenido ROCKET utilizando materiales de www.innovaruntref.com.ar y propón un 'INTERACTIVE CHALLENGE' técnico sobre "${item.word.toUpperCase()}".`;
 
             modalTitle.innerHTML = `<h3 style="color: var(--primary-color); margin-bottom: 0;">Practicando: ${item.word}</h3><p style="margin-top:5px; color: #666;">${item.meaning}</p>`;
-            content.textContent = prompt;
+            
+            // Typewriter effect
             modal.classList.remove('hidden');
+            typeWriterEffect(content, prompt, 1);
         };
 
         grid.appendChild(card);
     });
 
-    closeBtn.onclick = () => modal.classList.add('hidden');
-    window.onclick = (event) => { if (event.target == modal) modal.classList.add('hidden'); };
+    closeBtn.onclick = () => {
+        modal.classList.add('hidden');
+        if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    };
+    window.onclick = (event) => { 
+        if (event.target == modal) {
+            modal.classList.add('hidden');
+            if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+        }
+    };
 
     copyBtn.onclick = () => {
         navigator.clipboard.writeText(content.textContent).then(() => {
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = '¡Prompt Copiado!';
+            copyBtn.style.backgroundColor = 'var(--success-color)';
+            setTimeout(() => {
+                copyBtn.textContent = originalText;
+                copyBtn.style.backgroundColor = '';
+            }, 2000);
             showFeedback('Prompt copiado');
         });
     };
+}
+
+function showResultPopup(message, count = 0, total = 0) {
+    const modal = document.getElementById('result-modal');
+    const body = document.getElementById('result-body');
+    const starContainer = document.getElementById('result-stars');
+    if (modal && body) {
+        body.textContent = message;
+        
+        // Show stars in popup
+        if (starContainer && total > 0) {
+            updateStars('result-stars', count, total);
+            starContainer.classList.remove('hidden');
+        } else if (starContainer) {
+            starContainer.classList.add('hidden');
+        }
+
+        modal.classList.remove('hidden');
+    }
+}
+
+// Typewriter Effect Helper
+function typeWriterEffect(element, text, speed) {
+    if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    element.textContent = '';
+    let i = 0;
+    const charsPerTick = 4; // Warp speed: append 4 characters at once
+    window.typeWriterInterval = setInterval(() => {
+        if (i < text.length) {
+            element.textContent += text.substr(i, charsPerTick);
+            i += charsPerTick;
+            // Scroll to bottom as typing occurs
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        } else {
+            clearInterval(window.typeWriterInterval);
+        }
+    }, speed);
 }
 // Helper for Scores
 function updateStars(containerId, count, total) {
@@ -168,10 +233,11 @@ function initDragAndDrop() {
     const pool = document.getElementById('word-pool');
     const dropZonesContainer = document.querySelector('.drop-zones');
 
+    if (!pool || !dropZonesContainer) return;
+
     function buildDrag() {
         pool.innerHTML = '';
         dropZonesContainer.innerHTML = '';
-        updateStars('score-drag', 0, 1);
 
         const meanings = VOCABULARY.map(v => ({ text: v.meaning, match: v.word }));
         const shuffledMeanings = [...meanings].sort(() => Math.random() - 0.5);
@@ -223,12 +289,10 @@ function initDragAndDrop() {
                 }
             }
         });
-
-        updateStars('score-drag', correctCount, VOCABULARY.length);
         if (correctCount === VOCABULARY.length) {
-            showFeedback('¡Excelente! Todas las parejas son correctas.');
+            showResultPopup('¡Excelente! Todas las parejas son correctas. (12/12)', correctCount, VOCABULARY.length);
         } else {
-            showFeedback(`Emparejaste ${correctCount}/${VOCABULARY.length}.`, 'error');
+            showResultPopup(`Resultado: Emparejaste ${correctCount}/${VOCABULARY.length}.`, correctCount, VOCABULARY.length);
         }
     });
 
@@ -240,6 +304,8 @@ function initDragAndDrop() {
 function initFillBlanks() {
     const container = document.getElementById('fill-paragraph');
     const wordBankEl = document.getElementById('fill-word-bank');
+
+    if (!container || !wordBankEl) return;
 
     function buildFill() {
         const sentences = [
@@ -258,7 +324,6 @@ function initFillBlanks() {
         container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
-        updateStars('score-fill', 0, 1);
     }
 
     document.getElementById('check-fill').addEventListener('click', () => {
@@ -278,9 +343,11 @@ function initFillBlanks() {
                 input.placeholder = `[${answer}]`;
             }
         });
-        updateStars('score-fill', correct, inputs.length);
-        if (correct === inputs.length) showFeedback('¡Excelente!');
-        else showFeedback('Revisa los campos rojos.', 'error');
+        if (correct === inputs.length) {
+            showResultPopup(`¡Excelente! Completaste todo correctamente. (${correct}/${inputs.length})`, correct, inputs.length);
+        } else {
+            showResultPopup(`Resultado: Completaste ${correct}/${inputs.length} correctamente.`, correct, inputs.length);
+        }
     });
 
     document.getElementById('reset-fill').addEventListener('click', buildFill);
@@ -291,6 +358,8 @@ function initFillBlanks() {
 function initCrossword() {
     const gridEl = document.getElementById('crossword-grid');
     const cluesEl = document.getElementById('clue-list');
+
+    if (!gridEl || !cluesEl) return;
 
     function buildCrossword() {
         const crosswordData = [
@@ -313,7 +382,6 @@ function initCrossword() {
         gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 30px)`;
         gridEl.innerHTML = '';
         cluesEl.innerHTML = '';
-        updateStars('score-crossword', 0, 1);
 
         const grid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(null));
 
@@ -363,8 +431,11 @@ function initCrossword() {
                 correct++;
             } else input.style.backgroundColor = '#f8d7da';
         });
-        updateStars('score-crossword', correct, inputs.length);
-        if (correct === inputs.length) showFeedback('¡Excelente!');
+        if (correct === inputs.length) {
+            showResultPopup(`¡Felicidades! Crucigrama completado (${correct}/${inputs.length})`, correct, inputs.length);
+        } else {
+            showResultPopup(`Llevas ${correct} de ${inputs.length} letras correctas.`, correct, inputs.length);
+        }
     });
 
     document.getElementById('reset-crossword').addEventListener('click', buildCrossword);
@@ -380,6 +451,8 @@ function initHangman() {
     const alphabetEl = document.getElementById('alphabet');
     const hintText = document.getElementById('hangman-hint');
 
+    if (!wordDisplay || !alphabetEl || !hintText) return;
+
     let chosenWord = '';
     let guessedLetters = [];
     let mistakes = 0;
@@ -389,7 +462,6 @@ function initHangman() {
         chosenWord = item.word.toUpperCase().replace(/\s/g, '');
         guessedLetters = [];
         mistakes = 0;
-        updateStars('score-hangman', 0, 1);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBase();
         updateDisplay();
@@ -422,13 +494,11 @@ function initHangman() {
     function updateDisplay() {
         wordDisplay.textContent = chosenWord.split('').map(l => guessedLetters.includes(l) ? l : '_').join(' ');
         if (!wordDisplay.textContent.includes('_') && chosenWord !== '') {
-            showFeedback('¡Ganaste!');
-            updateStars('score-hangman', 5, 5);
+            showResultPopup('¡Ganaste! Adivinaste la palabra.', 5, 5);
             disableButtons();
         }
         if (mistakes >= 6) {
-            showFeedback(`Perdiste: ${chosenWord}`, 'error');
-            updateStars('score-hangman', 0, 5);
+            showResultPopup(`Perdiste. La palabra era: ${chosenWord}`, 0, 5);
             disableButtons();
         }
     }
@@ -471,6 +541,8 @@ function initScramble() {
     const resetBtn = document.getElementById('reset-scramble');
     const scoreEl = document.getElementById('score-scramble');
 
+    if (!lettersContainer || !answerEl || !hintEl || !checkBtn || !resetBtn) return;
+
     let currentWordObj = null;
     let builtWord = [];
 
@@ -489,7 +561,6 @@ function initScramble() {
         renderLetters(scrambledChars);
 
         hintEl.innerHTML = `<strong>Significado:</strong> ${currentWordObj.meaning} <br> <small>(Pista: Empieza con "${gameWord[0]}")</small>`;
-        updateStars('score-scramble', 0, 1);
     }
 
     function renderLetters(chars) {
@@ -520,11 +591,10 @@ function initScramble() {
     checkBtn.onclick = () => {
         const target = currentWordObj.word.toUpperCase().replace(/\s/g, '_');
         if (builtWord.join('') === target) {
-            showFeedback('¡Correcto! Excelente ortografía.', 'success');
-            updateStars('score-scramble', 5, 5);
+            showResultPopup('¡Correcto! Excelente ortografía.', 5, 5);
             setTimeout(nextWord, 2000);
         } else {
-            showFeedback('Palabra incorrecta. ¡Intenta de nuevo!', 'error');
+            showResultPopup('Palabra incorrecta. ¡Intenta de nuevo!', 0, 5);
             builtWord = [];
             updateDisplay();
             // Enable all buttons
@@ -532,7 +602,6 @@ function initScramble() {
                 b.disabled = false;
                 b.style.opacity = '1';
             });
-            updateStars('score-scramble', 0, 5);
         }
     };
 
@@ -549,7 +618,8 @@ function initTyping() {
     const startBtn = document.getElementById('start-typing');
     const checkBtn = document.getElementById('check-typing');
     const scoreEl = document.getElementById('score-typing');
-    const aiRecEl = document.getElementById('typing-ai-recommendation');
+
+    if (!wordEl || !inputEl || !timeEl || !pointsEl || !startBtn || !checkBtn) return;
 
     let time = 15;
     let points = 0;
@@ -583,35 +653,8 @@ function initTyping() {
         if (points >= 10) stars = 5;
         else if (points >= 5) stars = 3;
         else if (points >= 2) stars = 1;
-        updateStars('score-typing', stars, 5);
 
-        showFeedback(`Fin del reto: ${points} puntos`, points >= 5 ? 'success' : 'error');
-
-        // AI Recommendation
-        if (points > 0) {
-            const aiPrompt = `Actúa como un Docente de Inglés de Innovar UNTREF (no un tutor).
-MÉTODO ROCKET:
-R - ROL: Docente de Inglés de Innovar UNTREF.
-O - OBJETIVO: Crear una historia técnica de Ingeniería Informática y recomendar práctica lúdica.
-C - RECURSOS INSTITUCIONALES (Vínculos Directos):
-    - Videos: BBC Learning (https://youtube.com/@bbclearningenglish), Cambridge TV (https://youtube.com/@cambridgeenglishtv), British Council (https://youtube.com/@BritishCouncilLE).
-    - Sitios: British Council (https://learnenglish.britishcouncil.org), BBC Learning English (https://www.bbc.co.uk/learningenglish), Cambridge English (https://www.cambridgeenglish.org).
-K - KEY DETAILS:
-    1. Incluir estos términos: ${VOCABULARY.map(v => v.word).join(', ')}.
-    2. Recomendar juegos con vínculos directos:
-       - Wordshake: https://learnenglish.britishcouncil.org/general-english/games/wordshake
-       - Sushi Spell: https://learnenglish.britishcouncil.org/general-english/games/sushi-spell
-       - BBC Gameshow: https://www.bbc.co.uk/learningenglish/english/features/gameshow
-    3. Mencionar videos institucionales y YouGlish (https://youglish.com) para pronunciación.
-E - EXPECTATIVA: Historia breve, técnica y educativa.
-T - TONO: Profesional.`;
-            aiRecEl.innerHTML = `
-                <strong>🤖 Recomendación IA:</strong> ¡Excelente práctica! Como has acertado varias traducciones, te recomiendo usar este prompt para profundizar:<br><br>
-                <code style="display:block; background:#eee; padding:10px; border-radius:5px; margin-bottom:10px;">${aiPrompt}</code>
-                <button class="action-btn secondary" style="width:100%; margin-top:10px;" onclick="copyToClipboard('${aiPrompt.replace(/'/g, "\\'")}')">Copiar Recomendación IA</button>
-            `;
-            aiRecEl.classList.remove('hidden');
-        }
+        showResultPopup(`Fin del reto: ${points} puntos`, stars, 5);
     }
 
     window.copyToClipboard = (text) => {
@@ -649,10 +692,8 @@ T - TONO: Profesional.`;
         pointsEl.textContent = points;
         timeEl.textContent = time;
         inputEl.disabled = false;
-        aiRecEl.classList.add('hidden');
         startBtn.style.display = 'none';
         checkBtn.style.display = 'block';
-        updateStars('score-typing', 0, 5);
         setNextWord();
         timer = setInterval(updateTime, 1000);
     };
