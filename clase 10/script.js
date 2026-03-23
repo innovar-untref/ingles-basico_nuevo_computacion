@@ -1,22 +1,35 @@
 const VOCABULARY = [
-    { word: 'skills', meaning: 'habilidades', category: 'skills' },
-    { word: 'goods', meaning: 'mercancías', category: 'resources' },
-    { word: 'accomplishment', meaning: 'logro', category: 'outcomes' },
-    { word: 'resources', meaning: 'recursos', category: 'resources' },
-    { word: 'available', meaning: 'disponible', category: 'resources' },
-    { word: 'likewise', meaning: 'igualmente', category: 'connector' },
-    { word: 'developments', meaning: 'desarrollos', category: 'outcomes' },
-    { word: 'allowed', meaning: 'permitido', category: 'rules' },
-    { word: 'due to', meaning: 'debido a', category: 'connector' },
-    { word: 'improves', meaning: 'mejora', category: 'outcomes' },
-    { word: 'worsens', meaning: 'empeora', category: 'outcomes' },
-    { word: 'whether or', meaning: 'ya sea... o...', category: 'connector' }
+    { word: 'grow', meaning: 'crecer', category: 'default' },
+    { word: 'leading', meaning: 'líder', category: 'default' },
+    { word: 'underdeveloped', meaning: 'subdesarrollado', category: 'default' },
+    { word: 'even', meaning: 'incluso', category: 'default' },
+    { word: 'likely', meaning: 'probable', category: 'default' },
+    { word: 'among', meaning: 'entre', category: 'default' },
+    { word: 'unprecedented', meaning: 'sin precedentes', category: 'default' },
+    { word: 'share', meaning: 'compartir', category: 'default' },
+    { word: 'unless', meaning: 'a menos que', category: 'default' },
+    { word: 'nearly', meaning: 'casi', category: 'default' },
+    { word: 'half', meaning: 'mitad', category: 'default' },
+    { word: 'currently', meaning: 'actualmente', category: 'default' },
+    { word: 'rate', meaning: 'tasa', category: 'default' },
+    { word: 'spread', meaning: 'difundir/extender', category: 'default' },
+    { word: 'worldwide', meaning: 'en todo el mundo', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger Menu Logic
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+    }
+
     initNavigation();
     initDragAndDrop();
-    initFillBlanks();
+    
     initCrossword();
     initAILab();
     initHangman();
@@ -259,23 +272,26 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'ACCOMPLISHMENT', x: 0, y: 2, dir: 'across', clue: 'Logro o éxito.' },
-            { word: 'DEVELOPMENTS', x: 1, y: 10, dir: 'across', clue: 'Nuevos desarrollos.' },
-            { word: 'SKILLS', x: 0, y: 0, dir: 'across', clue: 'Habilidades.' },
-            { word: 'WHETHEROR', x: 0, y: 0, dir: 'down', clue: 'Ya sea... o...' },
-            { word: 'RESOURCES', x: 4, y: 0, dir: 'down', clue: 'Recursos.' },
-            { word: 'AVAILABLE', x: 8, y: 2, dir: 'down', clue: 'Disponible.' },
-            { word: 'LIKEWISE', x: 10, y: 2, dir: 'down', clue: 'Igualmente.' },
-            { word: 'GOODS', x: 0, y: 5, dir: 'across', clue: 'Mercancías.' },
-            { word: 'ALLOWED', x: 6, y: 6, dir: 'across', clue: 'Permitido.' },
-            { word: 'IMPROVES', x: 3, y: 8, dir: 'across', clue: 'Mejora.' },
-            { word: 'WORSENS', x: 13, y: 2, dir: 'down', clue: 'Empeora.' },
-            { word: 'DUETO', x: 10, y: 12, dir: 'across', clue: 'Debido a.' }
+            { word: 'UNDERDEVELOPED', x: 3, y: 10, dir: 'across', clue: 'subdesarrollado.' },
+            { word: 'UNPRECEDENTED', x: 8, y: 3, dir: 'down', clue: 'sin precedentes.' },
+            { word: 'CURRENTLY', x: 4, y: 5, dir: 'down', clue: 'actualmente.' },
+            { word: 'WORLDWIDE', x: 0, y: 14, dir: 'across', clue: 'en todo el mundo.' },
+            { word: 'LEADING', x: 3, y: 4, dir: 'across', clue: 'líder.' },
+            { word: 'SPREAD', x: 9, y: 7, dir: 'down', clue: 'difundir/extender.' },
+            { word: 'UNLESS', x: 11, y: 7, dir: 'down', clue: 'a menos que.' },
+            { word: 'NEARLY', x: 0, y: 12, dir: 'across', clue: 'casi.' },
+            { word: 'LIKELY', x: 7, y: 3, dir: 'down', clue: 'probable.' },
+            { word: 'AMONG', x: 5, y: 4, dir: 'down', clue: 'entre.' },
+            { word: 'SHARE', x: 4, y: 0, dir: 'down', clue: 'compartir.' },
+            { word: 'HALF', x: 3, y: 2, dir: 'down', clue: 'mitad.' },
+            { word: 'EVEN', x: 2, y: 9, dir: 'across', clue: 'incluso.' },
+            { word: 'RATE', x: 6, y: 13, dir: 'across', clue: 'tasa.' },
+            { word: 'GROW', x: 13, y: 8, dir: 'down', clue: 'crecer.' }
         ];
 
-        const GRID_SIZE = 15;
+        const GRID_SIZE = 20;
         gridEl.style.display = 'grid';
-        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 30px)`;
+        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 25px)`;
         gridEl.innerHTML = '';
         cluesEl.innerHTML = '';
         updateStars('score-crossword', 0, 1);
@@ -626,4 +642,21 @@ T - TONO: Profesional.`;
     inputEl.onkeypress = (e) => {
         if (e.key === 'Enter') verifyWord();
     };
+}
+
+// Typewriter effect function
+function typeWriterEffect(element, text, speed) {
+    if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    element.textContent = '';
+    let i = 0;
+    const charsPerTick = 4;
+    window.typeWriterInterval = setInterval(() => {
+        if (i < text.length) {
+            element.textContent += text.substr(i, charsPerTick);
+            i += charsPerTick;
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        } else {
+            clearInterval(window.typeWriterInterval);
+        }
+    }, speed);
 }

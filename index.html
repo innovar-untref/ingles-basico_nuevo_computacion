@@ -10,201 +10,114 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;700&display=swap"
         rel="stylesheet">
+    <style>
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .class-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+            border-color: #004b8d;
+            box-shadow: 0 8px 25px rgba(0, 75, 141, 0.15);
+        }
+
+        .class-card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #004b8d;
+        }
+
+        .class-card p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 
 <body class="untref-edtech-app">
-    <div id="result-modal" class="modal hidden">
-        <div class="modal-content result-content">
-            <div class="result-header">
-                <h2 id="result-title">¡Resultado!</h2>
-                <button id="close-result" class="close-btn">&times;</button>
-            </div>
-            <div id="result-body" class="result-body"></div>
-            <div id="result-stars" class="score-display justify-center"></div>
-            <div class="modal-footer">
-                <button id="close-result-btn" class="action-btn">Continuar</button>
-            </div>
-        </div>
-    </div>
-
     <header class="app-header">
-        <h1 class="header-title">INGLÉS BÁSICO COMPUTACIÓN</h1>
-        <p class="header-subtitle">Clase 2: Vocabulario ingeniería en computación</p>
+        <h1 class="header-title">INGLÉS BÁSICO - INGENIERÍA EN COMPUTACIÓN</h1>
+        <p class="header-subtitle">Plataforma de Aprendizaje de Vocabulario Técnico</p>
     </header>
 
-    <nav class="app-nav">
-        <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <div class="nav-links" id="nav-links">
-            <button class="nav-btn active" data-target="drag-drop">Matching</button>
-            <button class="nav-btn" data-target="crossword">Crossword</button>
-            <button class="nav-btn" data-target="hangman">Hangman</button>
-            <button class="nav-btn" data-target="word-scramble">Scramble</button>
-            <button class="nav-btn" data-target="speed-typing">Speed Typing</button>
-            <button class="nav-btn" data-target="ai-lab">AI Lab</button>
-        </div>
-    </nav>
     <main class="app-content">
-        <!-- Drag & Drop -->
-        <section id="drag-drop" class="activity-section active">
-            <div class="activity-header">
-                <h2>Clasificación de Conceptos</h2>
-            </div>
-            <p>Arrastra los significados a su palabra técnica correspondiente.</p>
-            <div class="drag-container">
-                <div class="word-pool" id="word-pool"></div>
-                <div class="drop-zones"></div>
-            </div>
-            <div class="action-bar">
-                <button id="check-drag" class="action-btn">Verificar</button>
-                <button id="reset-drag" class="action-btn secondary">Reiniciar</button>
-            </div>
-        </section>
+        <div class="innovar-disclaimer">
+            <p>Selecciona una de las clases para acceder a las actividades interactivas y laboratorios de inteligencia artificial de vocabulario técnico de Innovar UNTREF.</p>
+        </div>
 
-        <!-- Crossword -->
-        <section id="crossword" class="activity-section">
-            <div class="activity-header">
-                <h2>Crossword Puzzle</h2>
-            </div>
-            <p>Resuelve el crucigrama con el vocabulario de la clase.</p>
-            <div class="crossword-container">
-                <div id="crossword-grid" class="grid-layout"></div>
-                <div class="clues">
-                    <h3>Pistas</h3>
-                    <ul id="clue-list"></ul>
-                </div>
-            </div>
-            <div class="action-bar">
-                <button id="check-crossword" class="action-btn">Verificar</button>
-                <button id="reset-crossword" class="action-btn secondary">Reiniciar</button>
-            </div>
-        </section>
-
-        <!-- Hangman -->
-        <section id="hangman" class="activity-section">
-            <div class="activity-header">
-                <h2>The Hangman</h2>
-            </div>
-            <p>Adivina el término técnico antes de que sea tarde.</p>
-            <div class="hangman-container">
-                <canvas id="hangman-canvas" width="200" height="250"></canvas>
-                <div class="game-info">
-                    <div id="word-display" class="word-display"></div>
-                    <div id="alphabet" class="alphabet"></div>
-                    <p id="hangman-hint"></p>
-                </div>
-            </div>
-            <div class="action-bar">
-                <button id="reset-hangman" class="action-btn">Reiniciar Juego</button>
-            </div>
-        </section>
-
-        <!-- Word Scramble -->
-        <section id="word-scramble" class="activity-section">
-            <div class="activity-header">
-                <h2>Word Scramble</h2>
-            </div>
-            <div class="game-instructions">
-                <strong>📝 Cómo jugar:</strong> Haz clic en las letras para construir la palabra técnica.
-            </div>
-            <div class="scramble-container">
-                <div id="scrambled-word" class="scrambled-word hidden"></div>
-                <div id="scramble-letters" class="word-bank"></div>
-                <div id="scramble-answer" class="typing-word">_ _ _</div>
-                <p id="scramble-hint" class="game-hint"></p>
-            </div>
-            <div class="action-bar">
-                <button id="check-scramble" class="action-btn">Verificar</button>
-                <button id="reset-scramble" class="action-btn secondary">Nueva Palabra</button>
-            </div>
-        </section>
-
-        <!-- Speed Typing -->
-        <section id="speed-typing" class="activity-section">
-            <div class="activity-header">
-                <h2>Speed Typing Challenge</h2>
-            </div>
-            <div class="game-instructions">
-                <strong>⚡ Cómo jugar:</strong> Escribe la <strong>traducción al castellano</strong> de la palabra en
-                inglés. <strong>Nota:</strong> Si no escribes la palabra correctamente, el sistema no te permitirá
-                avanzar hasta que esté bien escrita; no podrás continuar hasta lograrlo.
-            </div>
-            <div class="typing-container">
-                <div class="typing-stats">
-                    <span>Tiempo: <span id="typing-time">15</span>s</span>
-                    <span>Puntos: <span id="typing-points">0</span></span>
-                </div>
-                <div id="typing-word" class="typing-word">¿LISTO?</div>
-                <input type="text" id="typing-input" class="game-input" placeholder="Escribe aquí..." autocomplete="off"
-                    disabled>
-            </div>
-            <div class="action-bar">
-                <button id="start-typing" class="action-btn">Empezar Reto</button>
-                <button id="check-typing" class="action-btn" style="display: none;">Verificar</button>
-            </div>
-        </section>
-
-        <!-- AI Lab -->
-        <section id="ai-lab" class="activity-section">
-            <div class="activity-header">
-                <h2>AI Lab: Vocabulario Inteligente</h2>
-            </div>
-            <div class="innovar-disclaimer">
-                <p><strong>El AI Lab: Vocabulario Inteligente de Innovar UNTREF</strong> promueve sistemas abiertos,
-                    libres y gratuitos para que utilices sus contenidos con cualquier IA, logrando una compatibilidad
-                    universal mediante <strong>Embeddings</strong> que traducen conceptos a un lenguaje matemático común
-                    y <strong>Transformers</strong> que garantizan el contexto académico exacto; todo esto potenciado
-                    por nuestra curaduría de datos y arquitectura de prompts, diseñada específicamente para guiar al
-                    modelo y proporcionar una base de conocimiento sólida, permitiendo así reducir drásticamente las
-                    alucinaciones de la IA al seleccionar una palabra para generar un prompt experto.</p>
-            </div>
-
-            <div class="word-grid" id="ai-word-grid">
-                <!-- Cards injected here -->
-            </div>
-
-            <div id="prompt-modal" class="modal hidden">
-                <div class="modal-content">
-                    <div class="prompt-header">
-                        <span class="prompt-badge">IA Prompt Experto</span>
-                        <button id="close-modal" class="close-btn">&times;</button>
-                    </div>
-                    <div id="modal-word-title" style="font-weight: bold; margin-bottom: 1rem;"></div>
-                    <div id="prompt-content" class="prompt-content"></div>
-                    <div class="modal-footer">
-                        <button id="copy-prompt" class="action-btn">Copiar Prompt</button>
-                        <p class="copy-instruction">Presiona en alguna IA para pegar el prompt copiado</p>
-                        <div class="ai-platform-links">
-                            <a href="https://chat.openai.com/" target="_blank" class="ai-button chatgpt">ChatGPT</a>
-                            <a href="https://gemini.google.com/" target="_blank" class="ai-button gemini">Gemini</a>
-                            <a href="https://claude.ai/" target="_blank" class="ai-button claude">Claude</a>
-                            <a href="https://huggingface.ai/chat/" target="_blank" class="ai-button hf">HuggingFace</a>
-                            <a href="https://www.perplexity.ai/" target="_blank"
-                                class="ai-button perplexity">Perplexity</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="class-grid">
+            <a href="clase 2/clase2.html" class="class-card">
+                <h3>Clase 2</h3>
+                <p>Ingeniería en computación</p>
+            </a>
+            <a href="clase 3/clase3.html" class="class-card">
+                <h3>Clase 3</h3>
+                <p>Análisis y percepción</p>
+            </a>
+            <a href="clase 4/clase4.html" class="class-card">
+                <h3>Clase 4</h3>
+                <p>Herramientas y era digital</p>
+            </a>
+            <a href="clase 5/clase5.html" class="class-card">
+                <h3>Clase 5</h3>
+                <p>Procesamiento de datos</p>
+            </a>
+            <a href="clase 6/clase6.html" class="class-card">
+                <h3>Clase 6</h3>
+                <p>Recuperación e IA</p>
+            </a>
+            <a href="clase 7/clase7.html" class="class-card">
+                <h3>Clase 7</h3>
+                <p>Enfoques y presupuestos</p>
+            </a>
+            <a href="clase 8/clase8.html" class="class-card">
+                <h3>Clase 8</h3>
+                <p>Características del sistema</p>
+            </a>
+            <a href="clase 9/clase9.html" class="class-card">
+                <h3>Clase 9</h3>
+                <p>Entrenamiento y precisión</p>
+            </a>
+            <a href="clase 10/clase10.html" class="class-card">
+                <h3>Clase 10</h3>
+                <p>Países y crecimiento</p>
+            </a>
+            <a href="clase 11/clase11.html" class="class-card">
+                <h3>Clase 11</h3>
+                <p>Deep Learning y resultados</p>
+            </a>
+        </div>
     </main>
- 
+
     <footer class="app-footer">
         <div class="footer-logo-container">
             <img src="logo-innovar.png" alt="Innovar UNTREF" class="footer-logo innovar-logo">
             <img src="logo-catedra.png" alt="Cátedra de Inglés UNTREF" class="footer-logo main-logo">
             <div class="logo-with-text">
-                <img src="logo-investigacion-untref.png" alt="Equipo de Investigación Tecnología Educativa UNTREF" class="footer-logo research-logo">
+                <img src="logo-investigacion-untref.png" alt="Equipo de Investigación" class="footer-logo research-logo">
             </div>
             <img src="logo-trememote.png" alt="Trememote" class="footer-logo">
         </div>
         <p>© 2026 Innovar UNTREF - Ingeniería en Computación</p>
-        <div id="feedback-toast" class="toast hidden"></div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 
 </html>

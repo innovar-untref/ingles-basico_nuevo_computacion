@@ -1,22 +1,30 @@
 const VOCABULARY = [
-    { word: 'skills', meaning: 'habilidades', category: 'skills' },
-    { word: 'goods', meaning: 'mercancías', category: 'resources' },
-    { word: 'accomplishment', meaning: 'logro', category: 'outcomes' },
-    { word: 'resources', meaning: 'recursos', category: 'resources' },
-    { word: 'available', meaning: 'disponible', category: 'resources' },
-    { word: 'likewise', meaning: 'igualmente', category: 'connector' },
-    { word: 'developments', meaning: 'desarrollos', category: 'outcomes' },
-    { word: 'allowed', meaning: 'permitido', category: 'rules' },
-    { word: 'due to', meaning: 'debido a', category: 'connector' },
-    { word: 'improves', meaning: 'mejora', category: 'outcomes' },
-    { word: 'worsens', meaning: 'empeora', category: 'outcomes' },
-    { word: 'whether or', meaning: 'ya sea... o...', category: 'connector' }
+    { word: 'features', meaning: 'características', category: 'default' },
+    { word: 'widely', meaning: 'ampliamente', category: 'default' },
+    { word: 'range', meaning: 'rango', category: 'default' },
+    { word: 'suitable', meaning: 'adecuado', category: 'default' },
+    { word: 'as well as', meaning: 'así como', category: 'default' },
+    { word: 'remain', meaning: 'permanecer', category: 'default' },
+    { word: 'rather than', meaning: 'en lugar de', category: 'default' },
+    { word: 'both', meaning: 'ambos', category: 'default' },
+    { word: 'common', meaning: 'común', category: 'default' },
+    { word: 'seamlessly', meaning: 'sin problemas', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger Menu Logic
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+    }
+
     initNavigation();
     initDragAndDrop();
-    initFillBlanks();
+    
     initCrossword();
     initAILab();
     initHangman();
@@ -259,23 +267,21 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'ACCOMPLISHMENT', x: 0, y: 2, dir: 'across', clue: 'Logro o éxito.' },
-            { word: 'DEVELOPMENTS', x: 1, y: 10, dir: 'across', clue: 'Nuevos desarrollos.' },
-            { word: 'SKILLS', x: 0, y: 0, dir: 'across', clue: 'Habilidades.' },
-            { word: 'WHETHEROR', x: 0, y: 0, dir: 'down', clue: 'Ya sea... o...' },
-            { word: 'RESOURCES', x: 4, y: 0, dir: 'down', clue: 'Recursos.' },
-            { word: 'AVAILABLE', x: 8, y: 2, dir: 'down', clue: 'Disponible.' },
-            { word: 'LIKEWISE', x: 10, y: 2, dir: 'down', clue: 'Igualmente.' },
-            { word: 'GOODS', x: 0, y: 5, dir: 'across', clue: 'Mercancías.' },
-            { word: 'ALLOWED', x: 6, y: 6, dir: 'across', clue: 'Permitido.' },
-            { word: 'IMPROVES', x: 3, y: 8, dir: 'across', clue: 'Mejora.' },
-            { word: 'WORSENS', x: 13, y: 2, dir: 'down', clue: 'Empeora.' },
-            { word: 'DUETO', x: 10, y: 12, dir: 'across', clue: 'Debido a.' }
+            { word: 'RATHERTHAN', x: 5, y: 10, dir: 'across', clue: 'en lugar de.' },
+            { word: 'SEAMLESSLY', x: 9, y: 5, dir: 'down', clue: 'sin problemas.' },
+            { word: 'ASWELLAS', x: 9, y: 7, dir: 'across', clue: 'así como.' },
+            { word: 'SUITABLE', x: 15, y: 3, dir: 'down', clue: 'adecuado.' },
+            { word: 'FEATURES', x: 12, y: 1, dir: 'down', clue: 'características.' },
+            { word: 'COMMON', x: 6, y: 8, dir: 'across', clue: 'común.' },
+            { word: 'REMAIN', x: 11, y: 2, dir: 'across', clue: 'permanecer.' },
+            { word: 'WIDELY', x: 5, y: 13, dir: 'across', clue: 'ampliamente.' },
+            { word: 'RANGE', x: 11, y: 2, dir: 'down', clue: 'rango.' },
+            { word: 'BOTH', x: 15, y: 8, dir: 'across', clue: 'ambos.' }
         ];
 
-        const GRID_SIZE = 15;
+        const GRID_SIZE = 20;
         gridEl.style.display = 'grid';
-        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 30px)`;
+        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 25px)`;
         gridEl.innerHTML = '';
         cluesEl.innerHTML = '';
         updateStars('score-crossword', 0, 1);
@@ -626,4 +632,21 @@ T - TONO: Profesional.`;
     inputEl.onkeypress = (e) => {
         if (e.key === 'Enter') verifyWord();
     };
+}
+
+// Typewriter effect function
+function typeWriterEffect(element, text, speed) {
+    if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    element.textContent = '';
+    let i = 0;
+    const charsPerTick = 4;
+    window.typeWriterInterval = setInterval(() => {
+        if (i < text.length) {
+            element.textContent += text.substr(i, charsPerTick);
+            i += charsPerTick;
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        } else {
+            clearInterval(window.typeWriterInterval);
+        }
+    }, speed);
 }

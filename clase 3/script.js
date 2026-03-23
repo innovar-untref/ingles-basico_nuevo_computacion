@@ -1,22 +1,30 @@
 const VOCABULARY = [
-    { word: 'skills', meaning: 'habilidades', category: 'skills' },
-    { word: 'goods', meaning: 'mercancías', category: 'resources' },
-    { word: 'accomplishment', meaning: 'logro', category: 'outcomes' },
-    { word: 'resources', meaning: 'recursos', category: 'resources' },
-    { word: 'available', meaning: 'disponible', category: 'resources' },
-    { word: 'likewise', meaning: 'igualmente', category: 'connector' },
-    { word: 'developments', meaning: 'desarrollos', category: 'outcomes' },
-    { word: 'allowed', meaning: 'permitido', category: 'rules' },
-    { word: 'due to', meaning: 'debido a', category: 'connector' },
-    { word: 'improves', meaning: 'mejora', category: 'outcomes' },
-    { word: 'worsens', meaning: 'empeora', category: 'outcomes' },
-    { word: 'whether or', meaning: 'ya sea... o...', category: 'connector' }
+    { word: 'insights', meaning: 'percepción', category: 'default' },
+    { word: 'smarter', meaning: 'más inteligente', category: 'default' },
+    { word: 'patterns and trends', meaning: 'patrones y tendencias', category: 'default' },
+    { word: 'often', meaning: 'a menudo', category: 'default' },
+    { word: 'rely on', meaning: 'depender de/contar con', category: 'default' },
+    { word: 'amounts', meaning: 'cantidades', category: 'default' },
+    { word: 'customer', meaning: 'cliente', category: 'default' },
+    { word: 'enables', meaning: 'permitir/hacer posible', category: 'default' },
+    { word: 'like', meaning: 'como', category: 'default' },
+    { word: 'behavior', meaning: 'conducta/comportamiento', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger Menu Logic
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+    }
+
     initNavigation();
     initDragAndDrop();
-    initFillBlanks();
+    
     initCrossword();
     initAILab();
     initHangman();
@@ -259,23 +267,21 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'ACCOMPLISHMENT', x: 0, y: 2, dir: 'across', clue: 'Logro o éxito.' },
-            { word: 'DEVELOPMENTS', x: 1, y: 10, dir: 'across', clue: 'Nuevos desarrollos.' },
-            { word: 'SKILLS', x: 0, y: 0, dir: 'across', clue: 'Habilidades.' },
-            { word: 'WHETHEROR', x: 0, y: 0, dir: 'down', clue: 'Ya sea... o...' },
-            { word: 'RESOURCES', x: 4, y: 0, dir: 'down', clue: 'Recursos.' },
-            { word: 'AVAILABLE', x: 8, y: 2, dir: 'down', clue: 'Disponible.' },
-            { word: 'LIKEWISE', x: 10, y: 2, dir: 'down', clue: 'Igualmente.' },
-            { word: 'GOODS', x: 0, y: 5, dir: 'across', clue: 'Mercancías.' },
-            { word: 'ALLOWED', x: 6, y: 6, dir: 'across', clue: 'Permitido.' },
-            { word: 'IMPROVES', x: 3, y: 8, dir: 'across', clue: 'Mejora.' },
-            { word: 'WORSENS', x: 13, y: 2, dir: 'down', clue: 'Empeora.' },
-            { word: 'DUETO', x: 10, y: 12, dir: 'across', clue: 'Debido a.' }
+            { word: 'PATTERNSANDTRENDS', x: 1, y: 10, dir: 'across', clue: 'patrones y tendencias.' },
+            { word: 'CUSTOMER', x: 12, y: 7, dir: 'down', clue: 'cliente.' },
+            { word: 'BEHAVIOR', x: 6, y: 3, dir: 'down', clue: 'conducta/comportamiento.' },
+            { word: 'INSIGHTS', x: 7, y: 9, dir: 'down', clue: 'percepción.' },
+            { word: 'SMARTER', x: 11, y: 12, dir: 'across', clue: 'más inteligente.' },
+            { word: 'AMOUNTS', x: 6, y: 6, dir: 'across', clue: 'cantidades.' },
+            { word: 'ENABLES', x: 10, y: 9, dir: 'down', clue: 'permitir/hacer posible.' },
+            { word: 'RELYON', x: 16, y: 11, dir: 'down', clue: 'depender de/contar con.' },
+            { word: 'OFTEN', x: 11, y: 4, dir: 'down', clue: 'a menudo.' },
+            { word: 'LIKE', x: 6, y: 12, dir: 'across', clue: 'como.' }
         ];
 
-        const GRID_SIZE = 15;
+        const GRID_SIZE = 20;
         gridEl.style.display = 'grid';
-        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 30px)`;
+        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 25px)`;
         gridEl.innerHTML = '';
         cluesEl.innerHTML = '';
         updateStars('score-crossword', 0, 1);
@@ -626,4 +632,21 @@ T - TONO: Profesional.`;
     inputEl.onkeypress = (e) => {
         if (e.key === 'Enter') verifyWord();
     };
+}
+
+// Typewriter effect function
+function typeWriterEffect(element, text, speed) {
+    if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    element.textContent = '';
+    let i = 0;
+    const charsPerTick = 4;
+    window.typeWriterInterval = setInterval(() => {
+        if (i < text.length) {
+            element.textContent += text.substr(i, charsPerTick);
+            i += charsPerTick;
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        } else {
+            clearInterval(window.typeWriterInterval);
+        }
+    }, speed);
 }

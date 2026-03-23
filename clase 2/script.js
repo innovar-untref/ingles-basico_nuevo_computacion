@@ -1,22 +1,32 @@
 const VOCABULARY = [
-    { word: 'skills', meaning: 'habilidades', category: 'skills' },
-    { word: 'goods', meaning: 'mercancías', category: 'resources' },
-    { word: 'accomplishment', meaning: 'logro', category: 'outcomes' },
-    { word: 'resources', meaning: 'recursos', category: 'resources' },
-    { word: 'available', meaning: 'disponible', category: 'resources' },
-    { word: 'likewise', meaning: 'igualmente', category: 'connector' },
-    { word: 'developments', meaning: 'desarrollos', category: 'outcomes' },
-    { word: 'allowed', meaning: 'permitido', category: 'rules' },
-    { word: 'due to', meaning: 'debido a', category: 'connector' },
-    { word: 'improves', meaning: 'mejora', category: 'outcomes' },
-    { word: 'worsens', meaning: 'empeora', category: 'outcomes' },
-    { word: 'whether or', meaning: 'ya sea... o...', category: 'connector' }
+    { word: 'skills', meaning: 'habilidades', category: 'default' },
+    { word: 'goods', meaning: 'mercancías', category: 'default' },
+    { word: 'accomplishment', meaning: 'logro', category: 'default' },
+    { word: 'resources', meaning: 'recursos', category: 'default' },
+    { word: 'available', meaning: 'disponible', category: 'default' },
+    { word: 'likewise', meaning: 'igualmente', category: 'default' },
+    { word: 'developments', meaning: 'desarrollos', category: 'default' },
+    { word: 'allowed', meaning: 'permitido', category: 'default' },
+    { word: 'due to', meaning: 'debido a', category: 'default' },
+    { word: 'improves', meaning: 'mejora', category: 'default' },
+    { word: 'worsens', meaning: 'empeora', category: 'default' },
+    { word: 'whether or', meaning: 'ya sea... o...', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger Menu Logic
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+    }
+
     initNavigation();
     initDragAndDrop();
-    initFillBlanks();
+    
     initCrossword();
     initAILab();
     initHangman();
@@ -259,23 +269,23 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'ACCOMPLISHMENT', x: 0, y: 2, dir: 'across', clue: 'Logro o éxito.' },
-            { word: 'DEVELOPMENTS', x: 1, y: 10, dir: 'across', clue: 'Nuevos desarrollos.' },
-            { word: 'SKILLS', x: 0, y: 0, dir: 'across', clue: 'Habilidades.' },
-            { word: 'WHETHEROR', x: 0, y: 0, dir: 'down', clue: 'Ya sea... o...' },
-            { word: 'RESOURCES', x: 4, y: 0, dir: 'down', clue: 'Recursos.' },
-            { word: 'AVAILABLE', x: 8, y: 2, dir: 'down', clue: 'Disponible.' },
-            { word: 'LIKEWISE', x: 10, y: 2, dir: 'down', clue: 'Igualmente.' },
-            { word: 'GOODS', x: 0, y: 5, dir: 'across', clue: 'Mercancías.' },
-            { word: 'ALLOWED', x: 6, y: 6, dir: 'across', clue: 'Permitido.' },
-            { word: 'IMPROVES', x: 3, y: 8, dir: 'across', clue: 'Mejora.' },
-            { word: 'WORSENS', x: 13, y: 2, dir: 'down', clue: 'Empeora.' },
-            { word: 'DUETO', x: 10, y: 12, dir: 'across', clue: 'Debido a.' }
+            { word: 'ACCOMPLISHMENT', x: 3, y: 10, dir: 'across', clue: 'logro.' },
+            { word: 'DEVELOPMENTS', x: 14, y: 7, dir: 'down', clue: 'desarrollos.' },
+            { word: 'WHETHEROR', x: 12, y: 9, dir: 'down', clue: 'ya sea... o....' },
+            { word: 'AVAILABLE', x: 9, y: 3, dir: 'down', clue: 'disponible.' },
+            { word: 'RESOURCES', x: 7, y: 15, dir: 'across', clue: 'recursos.' },
+            { word: 'IMPROVES', x: 4, y: 4, dir: 'across', clue: 'mejora.' },
+            { word: 'LIKEWISE', x: 10, y: 5, dir: 'down', clue: 'igualmente.' },
+            { word: 'WORSENS', x: 15, y: 12, dir: 'down', clue: 'empeora.' },
+            { word: 'ALLOWED', x: 5, y: 12, dir: 'across', clue: 'permitido.' },
+            { word: 'SKILLS', x: 11, y: 5, dir: 'down', clue: 'habilidades.' },
+            { word: 'DUETO', x: 16, y: 7, dir: 'down', clue: 'debido a.' },
+            { word: 'GOODS', x: 10, y: 13, dir: 'down', clue: 'mercancías.' }
         ];
 
-        const GRID_SIZE = 15;
+        const GRID_SIZE = 20;
         gridEl.style.display = 'grid';
-        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 30px)`;
+        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 25px)`;
         gridEl.innerHTML = '';
         cluesEl.innerHTML = '';
         updateStars('score-crossword', 0, 1);
@@ -626,4 +636,21 @@ T - TONO: Profesional.`;
     inputEl.onkeypress = (e) => {
         if (e.key === 'Enter') verifyWord();
     };
+}
+
+// Typewriter effect function
+function typeWriterEffect(element, text, speed) {
+    if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    element.textContent = '';
+    let i = 0;
+    const charsPerTick = 4;
+    window.typeWriterInterval = setInterval(() => {
+        if (i < text.length) {
+            element.textContent += text.substr(i, charsPerTick);
+            i += charsPerTick;
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        } else {
+            clearInterval(window.typeWriterInterval);
+        }
+    }, speed);
 }

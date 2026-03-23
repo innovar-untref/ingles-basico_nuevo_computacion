@@ -1,22 +1,30 @@
 const VOCABULARY = [
-    { word: 'skills', meaning: 'habilidades', category: 'skills' },
-    { word: 'goods', meaning: 'mercancías', category: 'resources' },
-    { word: 'accomplishment', meaning: 'logro', category: 'outcomes' },
-    { word: 'resources', meaning: 'recursos', category: 'resources' },
-    { word: 'available', meaning: 'disponible', category: 'resources' },
-    { word: 'likewise', meaning: 'igualmente', category: 'connector' },
-    { word: 'developments', meaning: 'desarrollos', category: 'outcomes' },
-    { word: 'allowed', meaning: 'permitido', category: 'rules' },
-    { word: 'due to', meaning: 'debido a', category: 'connector' },
-    { word: 'improves', meaning: 'mejora', category: 'outcomes' },
-    { word: 'worsens', meaning: 'empeora', category: 'outcomes' },
-    { word: 'whether or', meaning: 'ya sea... o...', category: 'connector' }
+    { word: 'stage', meaning: 'paso / etapa', category: 'default' },
+    { word: 'gather', meaning: 'recopilar / reunir', category: 'default' },
+    { word: 'raw', meaning: 'en bruto / sin procesar', category: 'default' },
+    { word: 'warehousing', meaning: 'almacenamiento', category: 'default' },
+    { word: 'so that', meaning: 'de manera que', category: 'default' },
+    { word: 'within', meaning: 'dentro de', category: 'default' },
+    { word: 'accurate', meaning: 'precisas', category: 'default' },
+    { word: 'assessments', meaning: 'evaluaciones', category: 'default' },
+    { word: 'field', meaning: 'campo', category: 'default' },
+    { word: 'need', meaning: 'necesitar', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger Menu Logic
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
+    }
+
     initNavigation();
     initDragAndDrop();
-    initFillBlanks();
+    
     initCrossword();
     initAILab();
     initHangman();
@@ -259,23 +267,21 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'ACCOMPLISHMENT', x: 0, y: 2, dir: 'across', clue: 'Logro o éxito.' },
-            { word: 'DEVELOPMENTS', x: 1, y: 10, dir: 'across', clue: 'Nuevos desarrollos.' },
-            { word: 'SKILLS', x: 0, y: 0, dir: 'across', clue: 'Habilidades.' },
-            { word: 'WHETHEROR', x: 0, y: 0, dir: 'down', clue: 'Ya sea... o...' },
-            { word: 'RESOURCES', x: 4, y: 0, dir: 'down', clue: 'Recursos.' },
-            { word: 'AVAILABLE', x: 8, y: 2, dir: 'down', clue: 'Disponible.' },
-            { word: 'LIKEWISE', x: 10, y: 2, dir: 'down', clue: 'Igualmente.' },
-            { word: 'GOODS', x: 0, y: 5, dir: 'across', clue: 'Mercancías.' },
-            { word: 'ALLOWED', x: 6, y: 6, dir: 'across', clue: 'Permitido.' },
-            { word: 'IMPROVES', x: 3, y: 8, dir: 'across', clue: 'Mejora.' },
-            { word: 'WORSENS', x: 13, y: 2, dir: 'down', clue: 'Empeora.' },
-            { word: 'DUETO', x: 10, y: 12, dir: 'across', clue: 'Debido a.' }
+            { word: 'ASSESSMENTS', x: 4, y: 10, dir: 'across', clue: 'evaluaciones.' },
+            { word: 'WAREHOUSING', x: 9, y: 3, dir: 'down', clue: 'almacenamiento.' },
+            { word: 'ACCURATE', x: 4, y: 5, dir: 'down', clue: 'precisas.' },
+            { word: 'SOTHAT', x: 13, y: 8, dir: 'down', clue: 'de manera que.' },
+            { word: 'WITHIN', x: 2, y: 11, dir: 'across', clue: 'dentro de.' },
+            { word: 'GATHER', x: 9, y: 13, dir: 'down', clue: 'recopilar / reunir.' },
+            { word: 'STAGE', x: 5, y: 6, dir: 'across', clue: 'paso / etapa.' },
+            { word: 'FIELD', x: 8, y: 11, dir: 'across', clue: 'campo.' },
+            { word: 'NEED', x: 7, y: 17, dir: 'across', clue: 'necesitar.' },
+            { word: 'RAW', x: 8, y: 4, dir: 'across', clue: 'en bruto / sin procesar.' }
         ];
 
-        const GRID_SIZE = 15;
+        const GRID_SIZE = 20;
         gridEl.style.display = 'grid';
-        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 30px)`;
+        gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 25px)`;
         gridEl.innerHTML = '';
         cluesEl.innerHTML = '';
         updateStars('score-crossword', 0, 1);
@@ -626,4 +632,21 @@ T - TONO: Profesional.`;
     inputEl.onkeypress = (e) => {
         if (e.key === 'Enter') verifyWord();
     };
+}
+
+// Typewriter effect function
+function typeWriterEffect(element, text, speed) {
+    if (window.typeWriterInterval) clearInterval(window.typeWriterInterval);
+    element.textContent = '';
+    let i = 0;
+    const charsPerTick = 4;
+    window.typeWriterInterval = setInterval(() => {
+        if (i < text.length) {
+            element.textContent += text.substr(i, charsPerTick);
+            i += charsPerTick;
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        } else {
+            clearInterval(window.typeWriterInterval);
+        }
+    }, speed);
 }

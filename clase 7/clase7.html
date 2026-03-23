@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNTREF EdTech - Inglés Técnico</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="untref-edtech-app">
+    <header class="app-header">
+        <h1 class="header-title">INGLÉS BÁSICO COMPUTACIÓN</h1>
+        <p class="header-subtitle">Clase 7: Enfoques y presupuestos</p>
+    </header>
+
+        <nav class="app-nav">
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+            <button class="nav-btn active" data-target="drag-drop">Matching</button>
+            <button class="nav-btn" data-target="crossword">Crossword</button>
+            <button class="nav-btn" data-target="hangman">Hangman</button>
+            <button class="nav-btn" data-target="word-scramble">Scramble</button>
+            <button class="nav-btn" data-target="speed-typing">Speed Typing</button>
+            <button class="nav-btn" data-target="ai-lab">AI Lab</button>
+        </div>
+    </nav>
+    <main class="app-content">
+        <!-- AI Lab (Default) -->
+        <section id="ai-lab" class="activity-section">
+            <div class="activity-header">
+                <h2>AI Lab: Vocabulario Inteligente</h2>
+            </div>
+            <div class="innovar-disclaimer">
+                <p><strong>El AI Lab: Vocabulario Inteligente de Innovar UNTREF</strong> promueve sistemas abiertos,
+                    libres y gratuitos para que utilices sus contenidos con cualquier IA, logrando una compatibilidad
+                    universal mediante <strong>Embeddings</strong> que traducen conceptos a un lenguaje matemático común
+                    y <strong>Transformers</strong> que garantizan el contexto académico exacto; todo esto potenciado
+                    por nuestra curaduría de datos y arquitectura de prompts, diseñada específicamente para guiar al
+                    modelo y proporcionar una base de conocimiento sólida, permitiendo así reducir drásticamente las
+                    alucinaciones de la IA al seleccionar una palabra para generar un prompt experto.</p>
+            </div>
+
+            <div class="word-grid" id="ai-word-grid">
+                <!-- Cards injected here -->
+            </div>
+
+            <div id="prompt-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="prompt-header">
+                        <span class="prompt-badge">IA Prompt Experto</span>
+                        <button id="close-modal" class="close-btn">&times;</button>
+                    </div>
+                    <div id="modal-word-title" style="font-weight: bold; margin-bottom: 1rem;"></div>
+                    <div id="prompt-content" class="prompt-content"></div>
+                    <div class="modal-footer">
+                        <button id="copy-prompt" class="action-btn">Copiar Prompt</button>
+                        <p class="copy-instruction">Presiona en alguna IA para pegar el prompt copiado</p>
+                        <div class="ai-platform-links">
+                            <a href="https://chat.openai.com/" target="_blank" class="ai-button chatgpt">ChatGPT</a>
+                            <a href="https://gemini.google.com/" target="_blank" class="ai-button gemini">Gemini</a>
+                            <a href="https://claude.ai/" target="_blank" class="ai-button claude">Claude</a>
+                            <a href="https://huggingface.ai/chat/" target="_blank" class="ai-button hf">HuggingFace</a>
+                            <a href="https://www.perplexity.ai/" target="_blank"
+                                class="ai-button perplexity">Perplexity</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drag & Drop -->
+        <section id="drag-drop" class="activity-section active">
+            <div class="activity-header">
+                <h2>Clasificación de Conceptos</h2>
+                <div class="score-display" id="score-drag"></div>
+            </div>
+            <p>Arrastra cada significado hasta la palabra correspondiente.</p>
+            <div class="drag-container">
+                <div class="word-pool" id="word-pool"></div>
+                <div class="drop-zones"></div>
+            </div>
+            <div class="action-bar">
+                <button id="check-drag" class="action-btn">Verificar</button>
+                <button id="reset-drag" class="action-btn secondary">Reiniciar</button>
+            </div>
+        </section>
+
+        <!-- Crossword -->
+        <section id="crossword" class="activity-section">
+            <div class="activity-header">
+                <h2>Crossword Puzzle</h2>
+                <div class="score-display" id="score-crossword"></div>
+            </div>
+            <p>Resuelve el crucigrama utilizando el vocabulario de la clase.</p>
+            <div class="crossword-container">
+                <div id="crossword-grid" class="grid-layout"></div>
+                <div class="clues">
+                    <h3>Pistas</h3>
+                    <ul id="clue-list"></ul>
+                </div>
+            </div>
+            <div class="action-bar">
+                <button id="check-crossword" class="action-btn">Verificar</button>
+                <button id="reset-crossword" class="action-btn secondary">Reiniciar</button>
+            </div>
+        </section>
+
+        <!-- Hangman -->
+        <section id="hangman" class="activity-section">
+            <div class="activity-header">
+                <h2>The Hangman</h2>
+                <div class="score-display" id="score-hangman"></div>
+            </div>
+            <p>Adivina el término técnico antes de que sea tarde.</p>
+            <div class="hangman-container">
+                <canvas id="hangman-canvas" width="200" height="250"></canvas>
+                <div class="game-info">
+                    <div id="word-display" class="word-display"></div>
+                    <div id="alphabet" class="alphabet"></div>
+                    <p id="hangman-hint"></p>
+                </div>
+            </div>
+            <div class="action-bar">
+                <button id="reset-hangman" class="action-btn">Reiniciar Juego</button>
+            </div>
+        </section>
+
+        <!-- Word Scramble -->
+        <section id="word-scramble" class="activity-section">
+            <div class="activity-header">
+                <h2>Word Scramble</h2>
+                <div class="score-display" id="score-scramble"></div>
+            </div>
+            <div class="game-instructions">
+                <strong>📝 Cómo jugar:</strong> Haz clic en las letras para construir la palabra técnica.
+            </div>
+            <div class="scramble-container">
+                <div id="scrambled-word" class="scrambled-word hidden"></div>
+                <div id="scramble-letters" class="word-bank"></div>
+                <div id="scramble-answer" class="typing-word">_ _ _</div>
+                <p id="scramble-hint" class="game-hint"></p>
+            </div>
+            <div class="action-bar">
+                <button id="check-scramble" class="action-btn">Verificar</button>
+                <button id="reset-scramble" class="action-btn secondary">Nueva Palabra</button>
+            </div>
+        </section>
+
+        <!-- Speed Typing -->
+        <section id="speed-typing" class="activity-section">
+            <div class="activity-header">
+                <h2>Speed Typing Challenge</h2>
+                <div class="score-display" id="score-typing"></div>
+            </div>
+            <div class="game-instructions">
+                <strong>⚡ Cómo jugar:</strong> Escribe la <strong>traducción al castellano</strong> de la palabra en
+                inglés.
+            </div>
+            <div class="typing-container">
+                <div class="typing-stats">
+                    <span>Tiempo: <span id="typing-time">50</span>s</span>
+                    <span>Puntos: <span id="typing-points">0</span></span>
+                </div>
+                <div id="typing-word" class="typing-word">¿LISTO?</div>
+                <input type="text" id="typing-input" class="game-input" placeholder="Escribe aquí..." autocomplete="off"
+                    disabled>
+                <div id="typing-ai-recommendation" class="game-instructions hidden" style="margin-top: 2rem;"></div>
+            </div>
+            <div class="action-bar">
+                <button id="start-typing" class="action-btn">Empezar Reto</button>
+                <button id="check-typing" class="action-btn" style="display: none;">Verificar</button>
+            </div>
+        </section>
+    </main>
+
+    
+    <div class="main-back-container"><a href="../index.html" class="action-btn back-main-btn">&larr; Volver a la página principal con todas las clases</a></div>
+    <footer class="app-footer">
+        <div class="footer-logo-container">
+            <img src="../logo-innovar.png" alt="Innovar UNTREF" class="footer-logo innovar-logo">
+            <img src="../logo-catedra.png" alt="Cátedra de Inglés UNTREF" class="footer-logo main-logo">
+            <img src="../logo-investigacion-untref.png" alt="Investigación UNTREF" class="footer-logo research-logo">
+            <img src="../logo-trememote.png" alt="Trememote" class="footer-logo">
+        </div>
+        <p>© 2026 Innovar UNTREF - Ingeniería en Computación</p>
+        <div id="feedback-toast" class="toast hidden"></div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
