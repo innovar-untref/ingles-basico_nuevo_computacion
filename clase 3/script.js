@@ -38,7 +38,7 @@ function initAILab() {
     const modal = document.getElementById('prompt-modal');
     const modalTitle = document.getElementById('modal-word-title');
     const content = document.getElementById('prompt-content');
-    const closeBtn = document.getElementById('close-modal');
+    
     const copyBtn = document.getElementById('copy-prompt');
 
     grid.innerHTML = '';
@@ -81,14 +81,15 @@ Instrucción final: Saluda como 'Docente de Inglés de Innovar UNTREF', presenta
 
             modalTitle.innerHTML = `<h3 style="color: var(--primary-color); margin-bottom: 0;">Practicando: ${item.word}</h3><p style="margin-top:5px; color: #666;">${item.meaning}</p>`;
             typeWriterEffect(content, prompt, 1);
-            modal.classList.remove('hidden');
+            modal.classList.add('active');
+            setTimeout(() => { modal.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
         };
 
         grid.appendChild(card);
     });
 
-    closeBtn.onclick = () => modal.classList.add('hidden');
-    window.onclick = (event) => { if (event.target == modal) modal.classList.add('hidden'); };
+    
+    
 
     copyBtn.onclick = () => {
         navigator.clipboard.writeText(content.textContent).then(() => {
@@ -129,12 +130,19 @@ function initNavigation() {
 
 // Toast Feedback
 function showFeedback(msg, type = 'success') {
-    const toast = document.getElementById('feedback-toast');
+    const activeSection = document.querySelector('.activity-section.active');
+    if (!activeSection) return;
+    
+    const toast = activeSection.querySelector('.toast');
+    if (!toast) return;
+
     toast.textContent = msg;
-    toast.className = `toast ${type}`;
-    toast.classList.remove('hidden');
-    setTimeout(() => toast.classList.add('hidden'), 3000);
+    toast.style.backgroundColor = type === 'success' ? 'var(--success-color)' : 'var(--error-color)';
+    toast.classList.add('active');
+    
+    setTimeout(() => toast.classList.remove('active'), 3000);
 }
+
 
 // 1. Drag & Drop Logic
 function initDragAndDrop() {
@@ -650,3 +658,4 @@ function typeWriterEffect(element, text, speed) {
         }
     }, speed);
 }
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -53,11 +53,11 @@
                 <!-- Cards injected here -->
             </div>
 
-            <div id="prompt-modal" class="modal hidden">
+            <div id="prompt-modal" class="modal">
                 <div class="modal-content">
                     <div class="prompt-header">
                         <span class="prompt-badge">IA Prompt Experto</span>
-                        <button id="close-modal" class="close-btn">&times;</button>
+                        
                     </div>
                     <div id="modal-word-title" style="font-weight: bold; margin-bottom: 1rem;"></div>
                     <div id="prompt-content" class="prompt-content"></div>
@@ -75,6 +75,7 @@
                     </div>
                 </div>
             </div>
+        <div class="toast"></div>
         </section>
 
         <!-- Drag & Drop -->
@@ -92,6 +93,7 @@
                 <button id="check-drag" class="action-btn">Verificar</button>
                 <button id="reset-drag" class="action-btn secondary">Reiniciar</button>
             </div>
+        <div class="toast"></div>
         </section>
 
         <!-- Crossword -->
@@ -112,6 +114,7 @@
                 <button id="check-crossword" class="action-btn">Verificar</button>
                 <button id="reset-crossword" class="action-btn secondary">Reiniciar</button>
             </div>
+        <div class="toast"></div>
         </section>
 
         <!-- Hangman -->
@@ -132,6 +135,7 @@
             <div class="action-bar">
                 <button id="reset-hangman" class="action-btn">Reiniciar Juego</button>
             </div>
+        <div class="toast"></div>
         </section>
 
         <!-- Word Scramble -->
@@ -153,6 +157,7 @@
                 <button id="check-scramble" class="action-btn">Verificar</button>
                 <button id="reset-scramble" class="action-btn secondary">Nueva Palabra</button>
             </div>
+        <div class="toast"></div>
         </section>
 
         <!-- Speed Typing -->
@@ -179,6 +184,7 @@
                 <button id="start-typing" class="action-btn">Empezar Reto</button>
                 <button id="check-typing" class="action-btn" style="display: none;">Verificar</button>
             </div>
+        <div class="toast"></div>
         </section>
     </main>
 
@@ -192,7 +198,7 @@
             <img src="../logo-trememote.png" alt="Trememote" class="footer-logo">
         </div>
         <p>© 2026 Innovar UNTREF - Ingeniería en Computación</p>
-        <div id="feedback-toast" class="toast hidden"></div>
+        
     </footer>
 
     <script src="script.js"></script>
