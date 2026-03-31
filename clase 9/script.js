@@ -1,14 +1,14 @@
 const VOCABULARY = [
-    { word: 'trained', meaning: 'capacitado/entrenado', category: 'default' },
-    { word: 'successful', meaning: 'exitoso', category: 'default' },
-    { word: 'at least', meaning: 'al menos', category: 'default' },
-    { word: 'achieve', meaning: 'lograr', category: 'default' },
-    { word: 'background', meaning: 'fondo/antecedentes', category: 'default' },
+    { word: 'speech', meaning: 'el habla', category: 'default' },
+    { word: 'reinforcing', meaning: 'reforzando', category: 'default' },
+    { word: 'discouraging', meaning: 'desalentando', category: 'default' },
+    { word: 'training', meaning: 'entrenamiento', category: 'default' },
     { word: 'accuracy', meaning: 'precisión', category: 'default' },
-    { word: 'performance', meaning: 'rendimiento', category: 'default' },
-    { word: 'reliable', meaning: 'confiable', category: 'default' },
-    { word: 'whether', meaning: 'ya sea', category: 'default' },
-    { word: 'deepened', meaning: 'profundizado', category: 'default' }
+    { word: 'sets', meaning: 'conjuntos', category: 'default' },
+    { word: 'labeled', meaning: 'etiquetado', category: 'default' },
+    { word: 'clustering', meaning: 'agrupamiento', category: 'default' },
+    { word: 'rewarding', meaning: 'recompensando', category: 'default' },
+    { word: 'mistakes', meaning: 'errores', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -224,19 +224,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. Artificial intelligence can process human **speech**. <input class="fill-input" data-answer="speech">`,
+            `2. Reinforcement learning works by **reinforcing** good actions. <input class="fill-input" data-answer="reinforcing">`,
+            `3. The system is **discouraging** incorrect predictions. <input class="fill-input" data-answer="discouraging">`,
+            `4. Machine learning models require extensive **training**. <input class="fill-input" data-answer="training">`,
+            `5. We need to improve the **accuracy** of the results. <input class="fill-input" data-answer="accuracy">`,
+            `6. Data scientists work with large data **sets**. <input class="fill-input" data-answer="sets">`,
+            `7. Supervised learning uses **labeled** data. <input class="fill-input" data-answer="labeled">`,
+            `8. Unsupervised learning involves **clustering** algorithms. <input class="fill-input" data-answer="clustering">`,
+            `9. The agent receives points for **rewarding** behavior. <input class="fill-input" data-answer="rewarding">`,
+            `10. Deep learning models learn from their **mistakes**. <input class="fill-input" data-answer="mistakes">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -275,16 +274,16 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'PERFORMANCE', x: 4, y: 10, dir: 'across', clue: 'rendimiento.' },
-            { word: 'SUCCESSFUL', x: 7, y: 3, dir: 'down', clue: 'exitoso.' },
-            { word: 'BACKGROUND', x: 13, y: 8, dir: 'down', clue: 'fondo/antecedentes.' },
-            { word: 'ATLEAST', x: 11, y: 10, dir: 'down', clue: 'al menos.' },
-            { word: 'DEEPENED', x: 3, y: 7, dir: 'across', clue: 'profundizado.' },
-            { word: 'RELIABLE', x: 9, y: 0, dir: 'down', clue: 'confiable.' },
-            { word: 'ACCURACY', x: 4, y: 4, dir: 'across', clue: 'precisión.' },
-            { word: 'TRAINED', x: 8, y: 3, dir: 'down', clue: 'capacitado/entrenado.' },
-            { word: 'WHETHER', x: 5, y: 5, dir: 'down', clue: 'ya sea.' },
-            { word: 'ACHIEVE', x: 5, y: 13, dir: 'across', clue: 'lograr.' }
+            { word: 'ACCURACY', x: 2, y: 5, dir: 'across', clue: 'precisión' },
+            { word: 'REINFORCING', x: 4, y: 2, dir: 'down', clue: 'reforzando' },
+            { word: 'CLUSTERING', x: 6, y: 3, dir: 'down', clue: 'agrupamiento' },
+            { word: 'MISTAKES', x: 8, y: 1, dir: 'down', clue: 'errores' },
+            { word: 'SPEECH', x: 2, y: 7, dir: 'across', clue: 'el habla' },
+            { word: 'SETS', x: 6, y: 4, dir: 'across', clue: 'conjuntos' },
+            { word: 'TRAINING', x: 5, y: 0, dir: 'down', clue: 'entrenamiento' },
+            { word: 'REWARDING', x: 0, y: 9, dir: 'across', clue: 'recompensando' },
+            { word: 'LABELED', x: 1, y: 1, dir: 'across', clue: 'etiquetado' },
+            { word: 'DISCOURAGING', x: 0, y: 11, dir: 'across', clue: 'desalentando' }
         ];
 
         const GRID_SIZE = 20;

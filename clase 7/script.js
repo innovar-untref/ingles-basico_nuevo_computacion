@@ -4,11 +4,11 @@ const VOCABULARY = [
     { word: 'the former…, the latter…', meaning: 'el primero…, y el segundo…', category: 'default' },
     { word: 'while', meaning: 'mientras que', category: 'default' },
     { word: 'keep up with', meaning: 'mantenerse al día con', category: 'default' },
-    { word: 'budget', meaning: 'presupuesto', category: 'default' },
-    { word: 'straightforward', meaning: 'sencillo/directo', category: 'default' },
-    { word: 'streamline', meaning: 'agilizar/optimizar', category: 'default' },
-    { word: 'overall', meaning: 'en general', category: 'default' },
-    { word: 'shortage', meaning: 'escasez', category: 'default' }
+    { word: 'broad', meaning: 'amplio', category: 'default' },
+    { word: 'budgeting', meaning: 'presupuestar', category: 'default' },
+    { word: 'risks', meaning: 'riesgo', category: 'default' },
+    { word: 'shift', meaning: 'mover', category: 'default' },
+    { word: 'account for', meaning: 'justificar', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -87,9 +87,6 @@ Instrucción final: Saluda como 'Docente de Inglés de Innovar UNTREF', presenta
 
         grid.appendChild(card);
     });
-
-    
-    
 
     copyBtn.onclick = () => {
         navigator.clipboard.writeText(content.textContent).then(() => {
@@ -224,19 +221,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. There are **various** ways to solve this coding problem. <input class="fill-input" data-answer="various">`,
+            `2. We follow different **approaches** in software development. <input class="fill-input" data-answer="approaches">`,
+            `3. Compare **the former** method with **the latter** one. <input class="fill-input" data-answer="the former…, the latter…">`,
+            `4. I studied Python **while** you were learning Java. <input class="fill-input" data-answer="while">`,
+            `5. Tech professionals must **keep up with** new libraries. <input class="fill-input" data-answer="keep up with">`,
+            `6. A **broad** knowledge of algorithms is essential. <input class="fill-input" data-answer="broad">`,
+            `7. Project management involves **budgeting** and planning. <input class="fill-input" data-answer="budgeting">`,
+            `8. Cybersecurity professionals assess potential **risks**. <input class="fill-input" data-answer="risks">`,
+            `9. We need to **shift** our focus to mobile development. <input class="fill-input" data-answer="shift">`,
+            `10. Database administrators must **account for** every query. <input class="fill-input" data-answer="account for">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -275,16 +271,16 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'THEFORMERTHELATTER', x: 1, y: 10, dir: 'across', clue: 'el primero…, y el segundo….' },
-            { word: 'STRAIGHTFORWARD', x: 5, y: 1, dir: 'down', clue: 'sencillo/directo.' },
-            { word: 'KEEPUPWITH', x: 15, y: 2, dir: 'down', clue: 'mantenerse al día con.' },
-            { word: 'APPROACHES', x: 3, y: 2, dir: 'down', clue: 'enfoques.' },
-            { word: 'STREAMLINE', x: 9, y: 8, dir: 'down', clue: 'agilizar/optimizar.' },
-            { word: 'SHORTAGE', x: 5, y: 1, dir: 'across', clue: 'escasez.' },
-            { word: 'VARIOUS', x: 10, y: 0, dir: 'down', clue: 'diversos.' },
-            { word: 'OVERALL', x: 8, y: 8, dir: 'down', clue: 'en general.' },
-            { word: 'BUDGET', x: 1, y: 5, dir: 'down', clue: 'presupuesto.' },
-            { word: 'WHILE', x: 12, y: 6, dir: 'down', clue: 'mientras que.' }
+            { word: 'VARIOUS', x: 2, y: 5, dir: 'across', clue: 'diversos' },
+            { word: 'APPROACHES', x: 4, y: 2, dir: 'down', clue: 'enfoques' },
+            { word: 'BROAD', x: 6, y: 3, dir: 'down', clue: 'amplio' },
+            { word: 'RISKS', x: 8, y: 1, dir: 'down', clue: 'riesgo' },
+            { word: 'SHIFT', x: 2, y: 7, dir: 'across', clue: 'mover' },
+            { word: 'WHILE', x: 6, y: 4, dir: 'across', clue: 'mientras que' },
+            { word: 'BUDGETING', x: 5, y: 0, dir: 'down', clue: 'presupuestar' },
+            { word: 'KEEPUPWITH', x: 0, y: 9, dir: 'across', clue: 'mantenerse al día con' },
+            { word: 'ACCOUNTFOR', x: 1, y: 1, dir: 'across', clue: 'justificar' },
+            { word: 'THEFORMERTHELATTER', x: 0, y: 11, dir: 'across', clue: 'el primero…, y el segundo…' }
         ];
 
         const GRID_SIZE = 20;

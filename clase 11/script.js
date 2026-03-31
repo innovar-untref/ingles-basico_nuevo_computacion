@@ -1,14 +1,14 @@
 const VOCABULARY = [
+    { word: 'deep', meaning: 'profundo', category: 'default' },
     { word: 'layers', meaning: 'capas', category: 'default' },
-    { word: 'mimics', meaning: 'imitar', category: 'default' },
-    { word: 'breakthroughs', meaning: 'avances/adelantos', category: 'default' },
-    { word: 'surpass', meaning: 'superar', category: 'default' },
-    { word: 'outcome', meaning: 'resultado', category: 'default' },
-    { word: 'huge', meaning: 'enorme', category: 'default' },
-    { word: 'hidden', meaning: 'oculto', category: 'default' },
-    { word: 'huge amounts', meaning: 'grandes cantidades', category: 'default' },
-    { word: 'handwriting', meaning: 'escritura a mano', category: 'default' },
-    { word: 'healthcare', meaning: 'cuidado de la salud', category: 'default' }
+    { word: 'weighting', meaning: 'ponderando', category: 'default' },
+    { word: 'break down', meaning: 'descomponer', category: 'default' },
+    { word: 'tag', meaning: 'etiquetar', category: 'default' },
+    { word: 'self-driving', meaning: 'auto-conducidos (autónomos)', category: 'default' },
+    { word: 'prompts', meaning: 'instrucciones/indicaciones', category: 'default' },
+    { word: 'reasoning', meaning: 'razonamiento', category: 'default' },
+    { word: 'accomplish', meaning: 'lograr', category: 'default' },
+    { word: 'outcomes', meaning: 'resultados', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -224,19 +224,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. Deep learning is a **deep** neural network. <input class="fill-input" data-answer="deep">`,
+            `2. Neural networks have multiple hidden **layers**. <input class="fill-input" data-answer="layers">`,
+            `3. Improving accuracy involves **weighting** connections. <input class="fill-input" data-answer="weighting">`,
+            `4. We need to **break down** complex problems. <input class="fill-input" data-answer="break down">`,
+            `5. Users can **tag** relevant information in the data. <input class="fill-input" data-answer="tag">`,
+            `6. AI is used in **self-driving** car technology. <input class="fill-input" data-answer="self-driving">`,
+            `7. Large language models respond to user **prompts**. <input class="fill-input" data-answer="prompts">`,
+            `8. Cognitive computing mimics human **reasoning**. <input class="fill-input" data-answer="reasoning">`,
+            `9. Effective algorithms help to **accomplish** tasks. <input class="fill-input" data-answer="accomplish">`,
+            `10. We evaluate the model based on its **outcomes**. <input class="fill-input" data-answer="outcomes">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -275,16 +274,16 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'BREAKTHROUGHS', x: 3, y: 10, dir: 'across', clue: 'avances/adelantos.' },
-            { word: 'HUGEAMOUNTS', x: 12, y: 3, dir: 'down', clue: 'grandes cantidades.' },
-            { word: 'HANDWRITING', x: 13, y: 0, dir: 'down', clue: 'escritura a mano.' },
-            { word: 'HEALTHCARE', x: 6, y: 1, dir: 'across', clue: 'cuidado de la salud.' },
-            { word: 'OUTCOME', x: 11, y: 10, dir: 'down', clue: 'resultado.' },
-            { word: 'SURPASS', x: 15, y: 4, dir: 'down', clue: 'superar.' },
-            { word: 'HIDDEN', x: 14, y: 10, dir: 'down', clue: 'oculto.' },
-            { word: 'LAYERS', x: 5, y: 7, dir: 'down', clue: 'capas.' },
-            { word: 'MIMICS', x: 13, y: 11, dir: 'across', clue: 'imitar.' },
-            { word: 'HUGE', x: 9, y: 10, dir: 'down', clue: 'enorme.' }
+            { word: 'SELFDRIVING', x: 2, y: 5, dir: 'across', clue: 'auto-conducidos (autónomos)' },
+            { word: 'REASONING', x: 2, y: 5, dir: 'down', clue: 'razonamiento' },
+            { word: 'PROMPTS', x: 0, y: 8, dir: 'across', clue: 'instrucciones/indicaciones' },
+            { word: 'LAYERS', x: 8, y: 3, dir: 'down', clue: 'capas' },
+            { word: 'WEIGHTING', x: 10, y: 2, dir: 'down', clue: 'ponderando' },
+            { word: 'ACCOMPLISH', x: 4, y: 10, dir: 'across', clue: 'lograr' },
+            { word: 'OUTCOMES', x: 6, y: 4, dir: 'down', clue: 'resultados' },
+            { word: 'BREAKDOWN', x: 0, y: 12, dir: 'across', clue: 'descomponer' },
+            { word: 'DEEP', x: 4, y: 10, dir: 'down', clue: 'profundo' },
+            { word: 'TAG', x: 10, y: 10, dir: 'down', clue: 'etiquetar' }
         ];
 
         const GRID_SIZE = 20;

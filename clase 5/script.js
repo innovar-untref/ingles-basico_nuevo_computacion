@@ -1,14 +1,15 @@
 const VOCABULARY = [
-    { word: 'stage', meaning: 'paso / etapa', category: 'default' },
-    { word: 'gather', meaning: 'recopilar / reunir', category: 'default' },
-    { word: 'raw', meaning: 'en bruto / sin procesar', category: 'default' },
-    { word: 'warehousing', meaning: 'almacenamiento', category: 'default' },
-    { word: 'so that', meaning: 'de manera que', category: 'default' },
+    { word: 'pleasant', meaning: 'agradable', category: 'default' },
+    { word: 'facilities', meaning: 'instalaciones/facilidades', category: 'default' },
+    { word: 'properties', meaning: 'propiedades', category: 'default' },
+    { word: 'should', meaning: 'debería', category: 'default' },
+    { word: 'ensure', meaning: 'asegurar', category: 'default' },
+    { word: 'mistaken', meaning: 'equivocado', category: 'default' },
     { word: 'within', meaning: 'dentro de', category: 'default' },
-    { word: 'accurate', meaning: 'precisas', category: 'default' },
-    { word: 'assessments', meaning: 'evaluaciones', category: 'default' },
-    { word: 'field', meaning: 'campo', category: 'default' },
-    { word: 'need', meaning: 'necesitar', category: 'default' }
+    { word: 'unless', meaning: 'a menos que', category: 'default' },
+    { word: 'may', meaning: 'podría/puede', category: 'default' },
+    { word: 'smear', meaning: 'mancha/difamación', category: 'default' },
+    { word: 'unappealing', meaning: 'poco atractivo', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -224,19 +225,19 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. A **pleasant** user interface improves UX. <input class="fill-input" data-answer="pleasant">`,
+            `2. The data center has modern **facilities**. <input class="fill-input" data-answer="facilities">`,
+            `3. CSS defines the **properties** of elements. <input class="fill-input" data-answer="properties">`,
+            `4. You **should** comment your code. <input class="fill-input" data-answer="should">`,
+            `5. **Ensure** that the database is backed up. <input class="fill-input" data-answer="ensure">`,
+            `6. A **mistaken** configuration broke the site. <input class="fill-input" data-answer="mistaken">`,
+            `7. The script must run **within** the allocated time. <input class="fill-input" data-answer="within">`,
+            `8. **Unless** you save, changes will be lost. <input class="fill-input" data-answer="unless">`,
+            `9. Errors **may** occur during execution. <input class="fill-input" data-answer="may">`,
+            `10. Avoid a **smear** on your professional reputation. <input class="fill-input" data-answer="smear">`,
+            `11. An **unappealing** layout drives users away. <input class="fill-input" data-answer="unappealing">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -275,16 +276,17 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'ASSESSMENTS', x: 4, y: 10, dir: 'across', clue: 'evaluaciones.' },
-            { word: 'WAREHOUSING', x: 9, y: 3, dir: 'down', clue: 'almacenamiento.' },
-            { word: 'ACCURATE', x: 4, y: 5, dir: 'down', clue: 'precisas.' },
-            { word: 'SOTHAT', x: 13, y: 8, dir: 'down', clue: 'de manera que.' },
-            { word: 'WITHIN', x: 2, y: 11, dir: 'across', clue: 'dentro de.' },
-            { word: 'GATHER', x: 9, y: 13, dir: 'down', clue: 'recopilar / reunir.' },
-            { word: 'STAGE', x: 5, y: 6, dir: 'across', clue: 'paso / etapa.' },
-            { word: 'FIELD', x: 8, y: 11, dir: 'across', clue: 'campo.' },
-            { word: 'NEED', x: 7, y: 17, dir: 'across', clue: 'necesitar.' },
-            { word: 'RAW', x: 8, y: 4, dir: 'across', clue: 'en bruto / sin procesar.' }
+            { word: 'PROPERTIES', x: 3, y: 10, dir: 'across', clue: 'propiedades.' },
+            { word: 'FACILITIES', x: 10, y: 5, dir: 'down', clue: 'instalaciones.' },
+            { word: 'UNAPPEALING', x: 12, y: 3, dir: 'down', clue: 'poco atractivo.' },
+            { word: 'MISTAKEN', x: 6, y: 6, dir: 'across', clue: 'equivocado.' },
+            { word: 'PLEASANT', x: 5, y: 13, dir: 'across', clue: 'agradable.' },
+            { word: 'SHOULD', x: 7, y: 4, dir: 'down', clue: 'debería.' },
+            { word: 'ENSURE', x: 10, y: 13, dir: 'down', clue: 'asegurar.' },
+            { word: 'WITHIN', x: 14, y: 7, dir: 'down', clue: 'dentro de.' },
+            { word: 'UNLESS', x: 2, y: 7, dir: 'down', clue: 'a menos que.' },
+            { word: 'SMEAR', x: 0, y: 12, dir: 'across', clue: 'mancha.' },
+            { word: 'MAY', x: 15, y: 11, dir: 'down', clue: 'podría.' }
         ];
 
         const GRID_SIZE = 20;

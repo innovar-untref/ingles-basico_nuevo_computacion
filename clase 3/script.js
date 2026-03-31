@@ -7,7 +7,7 @@ const VOCABULARY = [
     { word: 'amounts', meaning: 'cantidades', category: 'default' },
     { word: 'customer', meaning: 'cliente', category: 'default' },
     { word: 'enables', meaning: 'permitir/hacer posible', category: 'default' },
-    { word: 'like', meaning: 'como', category: 'default' },
+    { word: 'range', meaning: 'rango', category: 'default' },
     { word: 'behavior', meaning: 'conducta/comportamiento', category: 'default' }
 ];
 
@@ -224,19 +224,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. Data analysis provides deep **insights**. <input class="fill-input" data-answer="insights">`,
+            `2. AI makes our devices **smarter**. <input class="fill-input" data-answer="smarter">`,
+            `3. Algorithms find **patterns and trends** in data. <input class="fill-input" data-answer="patterns and trends">`,
+            `4. Developers **often** work in teams. <input class="fill-input" data-answer="often">`,
+            `5. Modern systems **rely on** cloud computing. <input class="fill-input" data-answer="rely on">`,
+            `6. Servers handle large **amounts** of data. <input class="fill-input" data-answer="amounts">`,
+            `7. The **customer** expects a smooth UI. <input class="fill-input" data-answer="customer">`,
+            `8. Automation **enables** faster deployment. <input class="fill-input" data-answer="enables">`,
+            `9. There is a wide **range** of programming languages. <input class="fill-input" data-answer="range">`,
+            `10. We analyze user **behavior** to improve the app. <input class="fill-input" data-answer="behavior">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -275,16 +274,16 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'PATTERNSANDTRENDS', x: 1, y: 10, dir: 'across', clue: 'patrones y tendencias.' },
+            { word: 'PATTERNSANDTRENDS', x: 0, y: 10, dir: 'across', clue: 'patrones y tendencias.' },
             { word: 'CUSTOMER', x: 12, y: 7, dir: 'down', clue: 'cliente.' },
-            { word: 'BEHAVIOR', x: 6, y: 3, dir: 'down', clue: 'conducta/comportamiento.' },
+            { word: 'BEHAVIOR', x: 6, y: 5, dir: 'down', clue: 'conducta/comportamiento.' },
             { word: 'INSIGHTS', x: 7, y: 9, dir: 'down', clue: 'percepción.' },
             { word: 'SMARTER', x: 11, y: 12, dir: 'across', clue: 'más inteligente.' },
-            { word: 'AMOUNTS', x: 6, y: 6, dir: 'across', clue: 'cantidades.' },
+            { word: 'AMOUNTS', x: 6, y: 14, dir: 'across', clue: 'cantidades.' },
             { word: 'ENABLES', x: 10, y: 9, dir: 'down', clue: 'permitir/hacer posible.' },
             { word: 'RELYON', x: 16, y: 11, dir: 'down', clue: 'depender de/contar con.' },
             { word: 'OFTEN', x: 11, y: 4, dir: 'down', clue: 'a menudo.' },
-            { word: 'LIKE', x: 6, y: 12, dir: 'across', clue: 'como.' }
+            { word: 'RANGE', x: 6, y: 14, dir: 'across', clue: 'rango.' }
         ];
 
         const GRID_SIZE = 20;

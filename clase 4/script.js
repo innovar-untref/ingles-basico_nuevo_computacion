@@ -224,19 +224,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. We live in the digital **age**. <input class="fill-input" data-answer="age">`,
+            `2. Git is an essential **tool** for developers. <input class="fill-input" data-answer="tool">`,
+            `3. We use Python **primarily** for AI. <input class="fill-input" data-answer="primarily">`,
+            `4. **In addition to** coding, we must test. <input class="fill-input" data-answer="in addition to">`,
+            `5. The graphics are **rendered** in real-time. <input class="fill-input" data-answer="rendered">`,
+            `6. System **misuse** can lead to security risks. <input class="fill-input" data-answer="misuse">`,
+            `7. Users are **warned** about phishing. <input class="fill-input" data-answer="warned">`,
+            `8. Do not **attempt** to bypass the firewall. <input class="fill-input" data-answer="attempt">`,
+            `9. **Another** server was added to the cluster. <input class="fill-input" data-answer="another">`,
+            `10. Stakeholders are **concerned** about data privacy. <input class="fill-input" data-answer="concerned">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -276,12 +275,12 @@ function initCrossword() {
     function buildCrossword() {
         const crosswordData = [
             { word: 'INADDITIONTO', x: 4, y: 10, dir: 'across', clue: 'además de.' },
-            { word: 'PRIMARILY', x: 6, y: 6, dir: 'down', clue: 'principalmente.' },
-            { word: 'CONCERNED', x: 12, y: 9, dir: 'down', clue: 'preocupado.' },
-            { word: 'RENDERED', x: 8, y: 16, dir: 'across', clue: 'representado.' },
+            { word: 'PRIMARILY', x: 6, y: 8, dir: 'down', clue: 'principalmente.' },
+            { word: 'CONCERNED', x: 8, y: 11, dir: 'down', clue: 'preocupado.' },
+            { word: 'RENDERED', x: 6, y: 13, dir: 'across', clue: 'representado.' },
             { word: 'ANOTHER', x: 5, y: 9, dir: 'down', clue: 'otro/otra.' },
             { word: 'ATTEMPT', x: 14, y: 8, dir: 'down', clue: 'intentar.' },
-            { word: 'MISUSE', x: 0, y: 14, dir: 'across', clue: 'mal uso.' },
+            { word: 'MISUSE', x: 9, y: 9, dir: 'down', clue: 'mal uso.' },
             { word: 'WARNED', x: 7, y: 17, dir: 'across', clue: 'advertido.' },
             { word: 'TOOL', x: 14, y: 9, dir: 'across', clue: 'herramienta.' },
             { word: 'AGE', x: 9, y: 14, dir: 'down', clue: 'era.' }

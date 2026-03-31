@@ -1,19 +1,19 @@
 const VOCABULARY = [
-    { word: 'grow', meaning: 'crecer', category: 'default' },
-    { word: 'leading', meaning: 'líder', category: 'default' },
-    { word: 'underdeveloped', meaning: 'subdesarrollado', category: 'default' },
-    { word: 'even', meaning: 'incluso', category: 'default' },
-    { word: 'likely', meaning: 'probable', category: 'default' },
-    { word: 'among', meaning: 'entre', category: 'default' },
-    { word: 'unprecedented', meaning: 'sin precedentes', category: 'default' },
-    { word: 'share', meaning: 'compartir', category: 'default' },
-    { word: 'unless', meaning: 'a menos que', category: 'default' },
-    { word: 'nearly', meaning: 'casi', category: 'default' },
-    { word: 'half', meaning: 'mitad', category: 'default' },
-    { word: 'currently', meaning: 'actualmente', category: 'default' },
-    { word: 'rate', meaning: 'tasa', category: 'default' },
-    { word: 'spread', meaning: 'difundir/extender', category: 'default' },
-    { word: 'worldwide', meaning: 'en todo el mundo', category: 'default' }
+    { word: 'with regard to', meaning: 'con respecto a', category: 'default' },
+    { word: 'make use of', meaning: 'hacer uso de', category: 'default' },
+    { word: 'issue', meaning: 'cuestión', category: 'default' },
+    { word: 'merely', meaning: 'simplemente', category: 'default' },
+    { word: 'within', meaning: 'dentro de', category: 'default' },
+    { word: 'in fact', meaning: 'de hecho', category: 'default' },
+    { word: 'for instance', meaning: 'por ejemplo', category: 'default' },
+    { word: 'mainly', meaning: 'principalmente', category: 'default' },
+    { word: 'developed countries', meaning: 'países desarrollados', category: 'default' },
+    { word: 'developing countries', meaning: 'países en vías de desarrollo', category: 'default' },
+    { word: 'missing', meaning: 'perdiéndose', category: 'default' },
+    { word: 'quantum leap', meaning: 'un gran salto', category: 'default' },
+    { word: 'growth', meaning: 'crecimiento', category: 'default' },
+    { word: 'advantage', meaning: 'ventaja', category: 'default' },
+    { word: 'since', meaning: 'desde (entonces)', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -229,19 +229,23 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. I have questions **with regard to** the new API. <input class="fill-input" data-answer="with regard to">`,
+            `2. Developers **make use of** various libraries. <input class="fill-input" data-answer="make use of">`,
+            `3. The security **issue** must be resolved quickly. <input class="fill-input" data-answer="issue">`,
+            `4. It is **merely** a syntax error. <input class="fill-input" data-answer="merely">`,
+            `5. The data is stored **within** the local database. <input class="fill-input" data-answer="within">`,
+            `6. **In fact**, the system is faster than before. <input class="fill-input" data-answer="in fact">`,
+            `7. Use different languages, **for instance**, Python. <input class="fill-input" data-answer="for instance">`,
+            `8. We use **mainly** open-source software. <input class="fill-input" data-answer="mainly">`,
+            `9. Tech hubs are found in **developed countries**. <input class="fill-input" data-answer="developed countries">`,
+            `10. Outsourcing often happens in **developing countries**. <input class="fill-input" data-answer="developing countries">`,
+            `11. A key file is **missing** from the repository. <input class="fill-input" data-answer="missing">`,
+            `12. AI represents a **quantum leap** in technology. <input class="fill-input" data-answer="quantum leap">`,
+            `13. We are seeing constant **growth** in users. <input class="fill-input" data-answer="growth">`,
+            `14. Scalability is a major **advantage** of cloud. <input class="fill-input" data-answer="advantage">`,
+            `15. I've been coding **since** I was ten. <input class="fill-input" data-answer="since">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -280,24 +284,24 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'UNDERDEVELOPED', x: 3, y: 10, dir: 'across', clue: 'subdesarrollado.' },
-            { word: 'UNPRECEDENTED', x: 8, y: 3, dir: 'down', clue: 'sin precedentes.' },
-            { word: 'CURRENTLY', x: 4, y: 5, dir: 'down', clue: 'actualmente.' },
-            { word: 'WORLDWIDE', x: 0, y: 14, dir: 'across', clue: 'en todo el mundo.' },
-            { word: 'LEADING', x: 3, y: 4, dir: 'across', clue: 'líder.' },
-            { word: 'SPREAD', x: 9, y: 7, dir: 'down', clue: 'difundir/extender.' },
-            { word: 'UNLESS', x: 11, y: 7, dir: 'down', clue: 'a menos que.' },
-            { word: 'NEARLY', x: 0, y: 12, dir: 'across', clue: 'casi.' },
-            { word: 'LIKELY', x: 7, y: 3, dir: 'down', clue: 'probable.' },
-            { word: 'AMONG', x: 5, y: 4, dir: 'down', clue: 'entre.' },
-            { word: 'SHARE', x: 4, y: 0, dir: 'down', clue: 'compartir.' },
-            { word: 'HALF', x: 3, y: 2, dir: 'down', clue: 'mitad.' },
-            { word: 'EVEN', x: 2, y: 9, dir: 'across', clue: 'incluso.' },
-            { word: 'RATE', x: 6, y: 13, dir: 'across', clue: 'tasa.' },
-            { word: 'GROW', x: 13, y: 8, dir: 'down', clue: 'crecer.' }
+            { word: 'WITHREGARDTO', x: 2, y: 1, dir: 'down', clue: 'con respecto a' },
+            { word: 'MAKEUSEOF', x: 12, y: 0, dir: 'down', clue: 'hacer uso de' },
+            { word: 'ISSUE', x: 10, y: 6, dir: 'across', clue: 'cuestión' },
+            { word: 'MERELY', x: 15, y: 7, dir: 'down', clue: 'simplemente' },
+            { word: 'WITHIN', x: 0, y: 3, dir: 'across', clue: 'dentro de' },
+            { word: 'INFACT', x: 8, y: 10, dir: 'across', clue: 'de hecho' },
+            { word: 'FORINSTANCE', x: 2, y: 2, dir: 'across', clue: 'por ejemplo' },
+            { word: 'MAINLY', x: 10, y: 8, dir: 'across', clue: 'principalmente' },
+            { word: 'DEVELOPEDCOUNTRIES', x: 1, y: 12, dir: 'across', clue: 'países desarrollados' },
+            { word: 'DEVELOPINGCOUNTRIES', x: 1, y: 12, dir: 'down', clue: 'países en vías de desarrollo' },
+            { word: 'MISSING', x: 4, y: 0, dir: 'across', clue: 'perdiéndose' },
+            { word: 'QUANTUMLEAP', x: 0, y: 5, dir: 'across', clue: 'un gran salto' },
+            { word: 'GROWTH', x: 6, y: 5, dir: 'down', clue: 'crecimiento' },
+            { word: 'ADVANTAGE', x: 2, y: 5, dir: 'down', clue: 'ventaja' },
+            { word: 'SINCE', x: 10, y: 2, dir: 'down', clue: 'desde (entonces)' }
         ];
 
-        const GRID_SIZE = 20;
+        const GRID_SIZE = 25;
         gridEl.style.display = 'grid';
         gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 25px)`;
         gridEl.innerHTML = '';

@@ -224,19 +224,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. Use SQL to **retrieve** data from the table. <input class="fill-input" data-answer="retrieve">`,
+            `2. **It is worthwhile** to learn a new framework. <input class="fill-input" data-answer="It is worthwhile">`,
+            `3. Computer science **encompasses** many fields. <input class="fill-input" data-answer="encompasses">`,
+            `4. **Nowadays**, everyone uses a smartphone. <input class="fill-input" data-answer="nowadays">`,
+            `5. AI can feel like a **disembodied** mind. <input class="fill-input" data-answer="disembodied">`,
+            `6. Juniors and seniors **alike** need to learn. <input class="fill-input" data-answer="alike">`,
+            `7. Automation simplifies repetitive **tasks**. <input class="fill-input" data-answer="tasks">`,
+            `8. Communcation is done **through** APIs. <input class="fill-input" data-answer="through">`,
+            `9. The feature is not ready **yet**. <input class="fill-input" data-answer="yet">`,
+            `10. Logic is the basis of **decision-making**. <input class="fill-input" data-answer="decision-making">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);

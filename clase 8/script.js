@@ -1,14 +1,14 @@
 const VOCABULARY = [
+    { word: 'branch', meaning: 'rama', category: 'default' },
+    { word: 'as well as', meaning: 'así como también', category: 'default' },
+    { word: 'replaced', meaning: 'reemplazado', category: 'default' },
+    { word: 'performing', meaning: 'realizar', category: 'default' },
+    { word: 'unable', meaning: 'incapaz', category: 'default' },
+    { word: 'take place', meaning: 'ocurrir', category: 'default' },
+    { word: 'such as', meaning: 'tales como', category: 'default' },
+    { word: 'even', meaning: 'incluso', category: 'default' },
     { word: 'features', meaning: 'características', category: 'default' },
-    { word: 'widely', meaning: 'ampliamente', category: 'default' },
-    { word: 'range', meaning: 'rango', category: 'default' },
-    { word: 'suitable', meaning: 'adecuado', category: 'default' },
-    { word: 'as well as', meaning: 'así como', category: 'default' },
-    { word: 'remain', meaning: 'permanecer', category: 'default' },
-    { word: 'rather than', meaning: 'en lugar de', category: 'default' },
-    { word: 'both', meaning: 'ambos', category: 'default' },
-    { word: 'common', meaning: 'común', category: 'default' },
-    { word: 'seamlessly', meaning: 'sin problemas', category: 'default' }
+    { word: 'increasing', meaning: 'creciente', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -224,19 +224,18 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. I have good technical <input class="fill-input" data-answer="skills">.`,
-            `2. The shop sells common <input class="fill-input" data-answer="goods">.`,
-            `3. We need more <input class="fill-input" data-answer="resources"> to work.`,
-            `4. The computer is <input class="fill-input" data-answer="available"> now.`,
-            `5. My computer <input class="fill-input" data-answer="improves"> with new RAM.`,
-            `6. Finishing the project is a big <input class="fill-input" data-answer="accomplishment">.`,
-            `7. There are new <input class="fill-input" data-answer="developments"> in tech.`,
-            `8. I like pizza; <input class="fill-input" data-answer="likewise">, I like pasta.`,
-            `9. The boss <input class="fill-input" data-answer="allowed"> a break.`,
-            `10. My PC <input class="fill-input" data-answer="worsens"> <input class="fill-input" data-answer="due to"> the virus.`,
-            `11. I don't know <input class="fill-input" data-answer="whether or"> it's A or B.`
+            `1. Version control uses a **branch** for new features. <input class="fill-input" data-answer="branch">`,
+            `2. We need hardware **as well as** software updates. <input class="fill-input" data-answer="as well as">`,
+            `3. Legacy systems are being **replaced** by cloud solutions. <input class="fill-input" data-answer="replaced">`,
+            `4. The server is **performing** daily backups at midnight. <input class="fill-input" data-answer="performing">`,
+            `5. Users were **unable** to access the database yesterday. <input class="fill-input" data-answer="unable">`,
+            `6. System maintenance will **take place** during the weekend. <input class="fill-input" data-answer="take place">`,
+            `7. Use high-level languages **such as** Python or Java. <input class="fill-input" data-answer="such as">`,
+            `8. This script works **even** if the network is slow. <input class="fill-input" data-answer="even">`,
+            `9. Modern IDEs include many useful **features**. <input class="fill-input" data-answer="features">`,
+            `10. There is an **increasing** demand for AI engineers. <input class="fill-input" data-answer="increasing">`
         ];
-        container.innerHTML = `<div class="fill-paragraph">${sentences.join(' ')}</div>`;
+        container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
         wordBankEl.innerHTML = allAnswers.sort(() => Math.random() - 0.5).map(w => `<span class="bank-word">${w}</span>`).join('');
         updateStars('score-fill', 0, 1);
@@ -275,16 +274,16 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'RATHERTHAN', x: 5, y: 10, dir: 'across', clue: 'en lugar de.' },
-            { word: 'SEAMLESSLY', x: 9, y: 5, dir: 'down', clue: 'sin problemas.' },
-            { word: 'ASWELLAS', x: 9, y: 7, dir: 'across', clue: 'así como.' },
-            { word: 'SUITABLE', x: 15, y: 3, dir: 'down', clue: 'adecuado.' },
-            { word: 'FEATURES', x: 12, y: 1, dir: 'down', clue: 'características.' },
-            { word: 'COMMON', x: 6, y: 8, dir: 'across', clue: 'común.' },
-            { word: 'REMAIN', x: 11, y: 2, dir: 'across', clue: 'permanecer.' },
-            { word: 'WIDELY', x: 5, y: 13, dir: 'across', clue: 'ampliamente.' },
-            { word: 'RANGE', x: 11, y: 2, dir: 'down', clue: 'rango.' },
-            { word: 'BOTH', x: 15, y: 8, dir: 'across', clue: 'ambos.' }
+            { word: 'INCREASING', x: 0, y: 2, dir: 'across', clue: 'creciente' },
+            { word: 'REPLACED', x: 4, y: 1, dir: 'down', clue: 'reemplazado' },
+            { word: 'BRANCH', x: 2, y: 5, dir: 'across', clue: 'rama' },
+            { word: 'PERFORMING', x: 3, y: 7, dir: 'across', clue: 'realizar' },
+            { word: 'UNABLE', x: 0, y: 7, dir: 'down', clue: 'incapaz' },
+            { word: 'TAKEPLACE', x: 1, y: 9, dir: 'across', clue: 'ocurrir' },
+            { word: 'SUCHAS', x: 6, y: 3, dir: 'down', clue: 'tales como' },
+            { word: 'EVEN', x: 3, y: 0, dir: 'down', clue: 'incluso' },
+            { word: 'FEATURES', x: 12, y: 1, dir: 'down', clue: 'características' },
+            { word: 'ASWELLAS', x: 3, y: 11, dir: 'across', clue: 'así como también' }
         ];
 
         const GRID_SIZE = 20;
