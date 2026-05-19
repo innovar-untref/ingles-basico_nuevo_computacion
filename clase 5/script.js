@@ -1,15 +1,14 @@
 const VOCABULARY = [
-    { word: 'pleasant', meaning: 'agradable', category: 'default' },
-    { word: 'facilities', meaning: 'instalaciones/facilidades', category: 'default' },
-    { word: 'properties', meaning: 'propiedades', category: 'default' },
-    { word: 'should', meaning: 'debería', category: 'default' },
-    { word: 'ensure', meaning: 'asegurar', category: 'default' },
-    { word: 'mistaken', meaning: 'equivocado', category: 'default' },
+    { word: 'stage', meaning: 'paso / etapa', category: 'default' },
+    { word: 'gather', meaning: 'recopilar / reunir', category: 'default' },
+    { word: 'raw', meaning: 'en bruto / sin procesar', category: 'default' },
+    { word: 'warehousing', meaning: 'almacenamiento', category: 'default' },
+    { word: 'so that', meaning: 'de manera que', category: 'default' },
     { word: 'within', meaning: 'dentro de', category: 'default' },
-    { word: 'unless', meaning: 'a menos que', category: 'default' },
-    { word: 'may', meaning: 'podría/puede', category: 'default' },
-    { word: 'smear', meaning: 'mancha/difamación', category: 'default' },
-    { word: 'unappealing', meaning: 'poco atractivo', category: 'default' }
+    { word: 'accurate', meaning: 'precisas', category: 'default' },
+    { word: 'assessments', meaning: 'evaluaciones', category: 'default' },
+    { word: 'field', meaning: 'campo', category: 'default' },
+    { word: 'need', meaning: 'necesitar', category: 'default' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -225,17 +224,16 @@ function initFillBlanks() {
 
     function buildFill() {
         const sentences = [
-            `1. A **pleasant** user interface improves UX. <input class="fill-input" data-answer="pleasant">`,
-            `2. The data center has modern **facilities**. <input class="fill-input" data-answer="facilities">`,
-            `3. CSS defines the **properties** of elements. <input class="fill-input" data-answer="properties">`,
-            `4. You **should** comment your code. <input class="fill-input" data-answer="should">`,
-            `5. **Ensure** that the database is backed up. <input class="fill-input" data-answer="ensure">`,
-            `6. A **mistaken** configuration broke the site. <input class="fill-input" data-answer="mistaken">`,
-            `7. The script must run **within** the allocated time. <input class="fill-input" data-answer="within">`,
-            `8. **Unless** you save, changes will be lost. <input class="fill-input" data-answer="unless">`,
-            `9. Errors **may** occur during execution. <input class="fill-input" data-answer="may">`,
-            `10. Avoid a **smear** on your professional reputation. <input class="fill-input" data-answer="smear">`,
-            `11. An **unappealing** layout drives users away. <input class="fill-input" data-answer="unappealing">`
+            `1. The first **stage** is planning. <input class="fill-input" data-answer="stage">`,
+            `2. We need to **gather** all requirements. <input class="fill-input" data-answer="gather">`,
+            `3. The **raw** data must be processed. <input class="fill-input" data-answer="raw">`,
+            `4. Data **warehousing** is essential. <input class="fill-input" data-answer="warehousing">`,
+            `5. Save it **so that** we can use it later. <input class="fill-input" data-answer="so that">`,
+            `6. It must be done **within** a week. <input class="fill-input" data-answer="within">`,
+            `7. The results are highly **accurate**. <input class="fill-input" data-answer="accurate">`,
+            `8. We run security **assessments**. <input class="fill-input" data-answer="assessments">`,
+            `9. It is a new **field** of study. <input class="fill-input" data-answer="field">`,
+            `10. You **need** to update the software. <input class="fill-input" data-answer="need">`
         ];
         container.innerHTML = `<div class="fill-paragraph">${sentences.join('<br>')}</div>`;
         const allAnswers = [...new Set(container.querySelectorAll('.fill-input'))].map(input => input.dataset.answer);
@@ -276,17 +274,16 @@ function initCrossword() {
 
     function buildCrossword() {
         const crosswordData = [
-            { word: 'PROPERTIES', x: 3, y: 10, dir: 'across', clue: 'propiedades.' },
-            { word: 'FACILITIES', x: 10, y: 5, dir: 'down', clue: 'instalaciones.' },
-            { word: 'UNAPPEALING', x: 12, y: 3, dir: 'down', clue: 'poco atractivo.' },
-            { word: 'MISTAKEN', x: 6, y: 6, dir: 'across', clue: 'equivocado.' },
-            { word: 'PLEASANT', x: 5, y: 13, dir: 'across', clue: 'agradable.' },
-            { word: 'SHOULD', x: 7, y: 4, dir: 'down', clue: 'debería.' },
-            { word: 'ENSURE', x: 10, y: 13, dir: 'down', clue: 'asegurar.' },
-            { word: 'WITHIN', x: 14, y: 7, dir: 'down', clue: 'dentro de.' },
-            { word: 'UNLESS', x: 2, y: 7, dir: 'down', clue: 'a menos que.' },
-            { word: 'SMEAR', x: 0, y: 12, dir: 'across', clue: 'mancha.' },
-            { word: 'MAY', x: 15, y: 11, dir: 'down', clue: 'podría.' }
+            { word: 'WAREHOUSING', x: 2, y: 5, dir: 'across', clue: 'almacenamiento.' },
+            { word: 'SOTHAT', x: 9, y: 5, dir: 'down', clue: 'de manera que.' },
+            { word: 'NEED', x: 11, y: 5, dir: 'down', clue: 'necesitar.' },
+            { word: 'ACCURATE', x: 4, y: 9, dir: 'across', clue: 'precisas.' },
+            { word: 'GATHER', x: 4, y: 8, dir: 'down', clue: 'recopilar / reunir.' },
+            { word: 'FIELD', x: 2, y: 12, dir: 'across', clue: 'campo.' },
+            { word: 'ASSESSMENTS', x: 1, y: 1, dir: 'down', clue: 'evaluaciones.' },
+            { word: 'RAW', x: 4, y: 1, dir: 'across', clue: 'en bruto / sin procesar.' },
+            { word: 'STAGE', x: 4, y: 3, dir: 'across', clue: 'paso / etapa.' },
+            { word: 'WITHIN', x: 14, y: 1, dir: 'down', clue: 'dentro de.' }
         ];
 
         const GRID_SIZE = 20;
